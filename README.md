@@ -52,4 +52,4 @@ Si un campo está mal escrito, `pnpm build` falla y dice cuál es. Así no se pu
 
 ## Despliegue en Vercel
 
-Importa el repositorio en Vercel: detecta Astro solo y no necesita configuración. El dominio de producción se toma automáticamente para el sitemap y las URL canónicas. Si conectas un dominio propio, define la variable de entorno `SITE_URL` (por ejemplo, `https://uneti-estudiantil.com`).
+Se publica con una GitHub Action en una cuenta de Vercel aparte, y solo con los commits del dueño del repositorio. La configuración paso a paso está en [DEPLOY.md](DEPLOY.md).

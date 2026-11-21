@@ -1,0 +1,51 @@
+# Despliega la web en Vercel cuando el dueño del repositorio hace push a master.
+# Vercel no se conecta a GitHub: esta acción sube la web con un token.
+# Configuración paso a paso: DEPLOY.md
+
+name: Desplegar en Vercel
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: # permite lanzarlo a mano desde la pestaña Actions
+
+# Si llegan dos pushes seguidos, solo se publica el último
+concurrency:
+  group: vercel-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    # Solo despliegan los commits que empuja el dueño del repositorio.
+    # Si el repo está en una organización, cambia github.repository_owner por tu usuario: 'tu-usuario'
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      SITE_URL: ${{ vars.SITE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4 # usa la versión de "packageManager" en package.json
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Descargar configuración del proyecto de Vercel
+        run: pnpm dlx vercel@latest pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Compilar
+        run: pnpm dlx vercel@latest build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Publicar
+        run: pnpm dlx vercel@latest deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
