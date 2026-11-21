@@ -2,7 +2,7 @@
 
 Web informativa de la UNETI hecha por estudiantes y para estudiantes: guías, noticias y recursos para la comunidad universitaria.
 
-Es un proyecto de código abierto y **no es la web oficial de la universidad**. La web oficial es [www.uneti.edu.ve](https://www.uneti.edu.ve/).
+Es un [proyecto de código abierto](https://github.com/Sethprie/uneti-web) y **no es la web oficial de la universidad**. La web oficial es [www.uneti.edu.ve](https://www.uneti.edu.ve/).
 
 Está construida con [Astro](https://astro.build) y genera HTML estático. Por eso es rápida, se indexa bien en buscadores y puede alojarse sin coste.
 
@@ -14,6 +14,8 @@ Está construida con [Astro](https://astro.build) y genera HTML estático. Por e
 ## Desarrollo local
 
 ```sh
+git clone https://github.com/Sethprie/uneti-web.git
+cd uneti-web
 pnpm install
 pnpm dev       # servidor local en http://localhost:4321
 pnpm build     # genera la web en dist/

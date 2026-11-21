@@ -13,7 +13,7 @@ UNETI Estudiantil se construye con los aportes de la comunidad. Se puede contrib
 
 ## Proponer contenido sin programar
 
-Las propuestas pueden enviarse por los canales de la comunidad (Discord o WhatsApp, enlazados en la web) o abriendo un *issue* en el repositorio. El equipo las revisa, sugiere ajustes si hacen falta y las publica con el nombre de quien las escribió.
+Las propuestas pueden enviarse por los canales de la comunidad (Discord o WhatsApp, enlazados en la web) o abriendo un [*issue* en GitHub](https://github.com/Sethprie/uneti-web/issues/new). El equipo las revisa, sugiere ajustes si hacen falta y las publica con el nombre de quien las escribió.
 
 ## Añadir una guía o una noticia
 
@@ -37,7 +37,7 @@ Los enlaces de la página Recursos están en `src/data/recursos.ts`, agrupados p
 
 ## Contribuir con código
 
-1. Hacer un *fork* del repositorio y crear una rama para el cambio.
+1. Hacer un *fork* de [Sethprie/uneti-web](https://github.com/Sethprie/uneti-web) y crear una rama para el cambio.
 2. Instalar y arrancar el proyecto según el [README](README.md#desarrollo-local).
 3. Verificar que `pnpm build` termina sin errores y que la web se ve bien en modo claro, en modo oscuro y en móvil.
 4. Abrir un *pull request* contra `master` con una descripción breve del cambio.

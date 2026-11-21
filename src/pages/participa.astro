@@ -63,10 +63,27 @@ const pasos = [
         <li><code>src/content/noticias/</code> para noticias con fecha.</li>
       </ul>
       {site.repoUrl && (
-        <p>
-          El código está en <a href={site.repoUrl}>el repositorio del proyecto</a>. Abre un pull request con tu
-          archivo y lo revisamos.
-        </p>
+        <>
+          <p>
+            El proyecto es de código abierto y está en GitHub. Abre un pull request con tu archivo y lo
+            revisamos.
+          </p>
+          <ul>
+            <li>
+              <a href={site.repoUrl} target="_blank" rel="noopener">Repositorio en GitHub</a>
+            </li>
+            <li>
+              <a href={`${site.repoUrl}/blob/master/CONTRIBUTING.md`} target="_blank" rel="noopener">
+                Guía para contribuir
+              </a>
+            </li>
+            <li>
+              <a href={`${site.repoUrl}/issues/new`} target="_blank" rel="noopener">
+                Proponer una idea o avisar de un error
+              </a>
+            </li>
+          </ul>
+        </>
       )}
       {site.contact && (
         <p>
