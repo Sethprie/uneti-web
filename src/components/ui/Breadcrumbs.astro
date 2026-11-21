@@ -1,0 +1,62 @@
+---
+/** Migas de pan: "Inicio / Guías / Título". El último elemento no lleva enlace. */
+interface Props {
+  items: { label: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+const trail = [{ label: 'Inicio', href: '/' }, ...items];
+---
+
+<nav aria-label="Ruta de navegación" class="crumbs">
+  <ol>
+    {
+      trail.map((item, i) => (
+        <li>
+          {item.href && i < trail.length - 1 ? (
+            <a href={item.href}>{item.label}</a>
+          ) : (
+            <span aria-current="page">{item.label}</span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  li:not(:last-child)::after {
+    content: '/';
+    margin-left: 4px;
+    opacity: 0.6;
+  }
+
+  a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--link);
+    text-decoration: underline;
+  }
+
+  [aria-current='page'] {
+    color: var(--text);
+    max-width: 40ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,105 @@
+---
+/**
+ * Logo de la UNETI recreado en SVG, sin fondo.
+ * - variant="full": isotipo + "UNETI" + franja de colores.
+ * - variant="mark": solo el isotipo (la J con la órbita), para la cabecera.
+ * Las partes azul marino usan var(--logo-ink), que pasa a blanco en modo oscuro.
+ */
+interface Props {
+  variant?: 'full' | 'mark';
+  class?: string;
+  title?: string;
+}
+
+const { variant = 'full', class: className, title = 'UNETI' } = Astro.props;
+
+// IDs únicos por instancia para que varias copias en la misma página no choquen
+const uid = `uneti-${Math.random().toString(36).slice(2, 8)}`;
+const viewBox = variant === 'full' ? '200 18 532 762' : '240 18 422 330';
+
+const J =
+  'M520 38 H579 Q593 38 593 52 V205 C593 285 530 336 455 336 C405 336 360 305 340 270 C360 284 385 291 412 291 C455 291 498 245 498 200 V60 Q498 38 520 38 Z';
+---
+
+<svg
+  class:list={['logo', className]}
+  viewBox={viewBox}
+  xmlns="http://www.w3.org/2000/svg"
+  role={title ? 'img' : undefined}
+  aria-label={title || undefined}
+  aria-hidden={title ? undefined : 'true'}
+>
+  <defs>
+    <path id={`${uid}-j`} d={J}></path>
+    <clipPath id={`${uid}-lower`}><rect x="480" y="150" width="220" height="220"></rect></clipPath>
+    <mask id={`${uid}-ring`} maskUnits="userSpaceOnUse" x="200" y="0" width="540" height="400">
+      <rect x="200" y="0" width="540" height="400" fill="#fff"></rect>
+      <rect x="377" y="19" width="49" height="51" fill="#000"></rect>
+      <g clip-path={`url(#${uid}-lower)`}>
+        <use href={`#${uid}-j`} fill="#000" stroke="#000" stroke-width="16"></use>
+      </g>
+    </mask>
+    <mask id={`${uid}-jm`} maskUnits="userSpaceOnUse" x="200" y="0" width="540" height="400">
+      <rect x="200" y="0" width="540" height="400" fill="#fff"></rect>
+      <path
+        transform="rotate(17 450 133)"
+        d="M496.9 70.2 A181 65 0 0 1 606.7 100.5"
+        fill="none"
+        stroke="#000"
+        stroke-width="8"></path>
+    </mask>
+  </defs>
+
+  <path
+    class="ink"
+    mask={`url(#${uid}-ring)`}
+    transform="rotate(17 450 133)"
+    d="M291.4 183.8 A207 79 0 1 1 613.1 181.7 L595.8 175.5 A185 69 0 1 0 293.1 169.6 Z"></path>
+  <g fill="var(--brand-teal)">
+    <rect x="336" y="64" width="45" height="47"></rect>
+    <rect x="303" y="98" width="52" height="60"></rect>
+    <path d="M318 186 H352 V155 H390 V115 H417 V231 H482 C470 262 440 282 400 282 C355 282 322 245 318 200 Z"></path>
+  </g>
+  <rect x="385" y="27" width="33" height="35" fill="var(--brand-orange)"></rect>
+  <rect x="388" y="188" width="40" height="43" fill="var(--brand-yellow)"></rect>
+  <use href={`#${uid}-j`} class="ink" mask={`url(#${uid}-jm)`}></use>
+
+  {
+    variant === 'full' && (
+      <>
+        <path
+          fill="var(--brand-orange)"
+          d="M208 360 H239.5 V640 Q239.5 651 251 651 H268 Q279 651 279 640 V360 H310.5 V647 Q310.5 677 280 677 H238 Q208 677 208 647 Z"
+        />
+        <g class="ink">
+          <rect x="326" y="361" width="32" height="314" />
+          <rect x="397" y="361" width="31" height="314" />
+          <polygon points="358,361 397,556 397,675 358,491" />
+          <rect x="446" y="361" width="30" height="314" />
+          <polygon points="446,361 537,361 523,389 446,389" />
+          <polygon points="446,494 526,494 508,525 446,525" />
+          <polygon points="446,646 536,646 520,675 446,675" />
+          <polygon points="549,361 676,361 676,389 545,389 545,365" />
+          <rect x="590" y="361" width="31" height="314" />
+          <rect x="690" y="361" width="29" height="314" />
+        </g>
+        <rect x="207" y="700" width="75" height="75" rx="9" fill="var(--brand-green)" />
+        <rect x="295" y="700" width="75" height="75" rx="9" fill="var(--brand-yellow)" />
+        <rect x="383" y="700" width="75" height="75" rx="9" fill="var(--brand-purple)" />
+        <rect x="471" y="700" width="75" height="75" rx="9" fill="var(--brand-teal)" />
+        <rect x="559" y="700" width="75" height="75" rx="9" class="ink" />
+        <rect x="647" y="700" width="75" height="75" rx="9" fill="var(--brand-orange)" />
+      </>
+    )
+  }
+</svg>
+
+<style>
+  .logo {
+    height: auto;
+  }
+  .logo :global(.ink) {
+    fill: var(--logo-ink);
+    transition: fill 0.2s ease;
+  }
+</style>

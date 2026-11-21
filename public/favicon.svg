@@ -1,9 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 128 128">
-    <path d="M50.4 78.5a75.1 75.1 0 0 0-28.5 6.9l24.2-65.7c.7-2 1.9-3.2 3.4-3.2h29c1.5 0 2.7 1.2 3.4 3.2l24.2 65.7s-11.6-7-28.5-7L67 45.5c-.4-1.7-1.6-2.8-2.9-2.8-1.3 0-2.5 1.1-2.9 2.7L50.4 78.5Zm-1.1 28.2Zm-4.2-20.2c-2 6.6-.6 15.8 4.2 20.2a17.5 17.5 0 0 1 .2-.7 5.5 5.5 0 0 1 5.7-4.5c2.8.1 4.3 1.5 4.7 4.7.2 1.1.2 2.3.2 3.5v.4c0 2.7.7 5.2 2.2 7.4a13 13 0 0 0 5.7 4.9v-.3l-.2-.3c-1.8-5.6-.5-9.5 4.4-12.8l1.5-1a73 73 0 0 0 3.2-2.2 16 16 0 0 0 6.8-11.4c.3-2 .1-4-.6-6l-.8.6-1.6 1a37 37 0 0 1-22.4 2.7c-5-.7-9.7-2-13.2-6.2Z" />
-    <style>
-        path { fill: #000; }
-        @media (prefers-color-scheme: dark) {
-            path { fill: #FFF; }
-        }
-    </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="240 0 422 422">
+  <style>
+    .ink { fill: #0d1f4f; }
+    @media (prefers-color-scheme: dark) { .ink { fill: #ffffff; } }
+  </style>
+  <defs>
+    <path id="j" d="M520 38 H579 Q593 38 593 52 V205 C593 285 530 336 455 336 C405 336 360 305 340 270 C360 284 385 291 412 291 C455 291 498 245 498 200 V60 Q498 38 520 38 Z" />
+    <clipPath id="lower"><rect x="480" y="150" width="220" height="220" /></clipPath>
+    <mask id="ring" maskUnits="userSpaceOnUse" x="200" y="0" width="540" height="400">
+      <rect x="200" y="0" width="540" height="400" fill="#fff" />
+      <rect x="377" y="19" width="49" height="51" fill="#000" />
+      <g clip-path="url(#lower)"><use href="#j" fill="#000" stroke="#000" stroke-width="16" /></g>
+    </mask>
+    <mask id="jm" maskUnits="userSpaceOnUse" x="200" y="0" width="540" height="400">
+      <rect x="200" y="0" width="540" height="400" fill="#fff" />
+      <path transform="rotate(17 450 133)" d="M496.9 70.2 A181 65 0 0 1 606.7 100.5" fill="none" stroke="#000" stroke-width="8" />
+    </mask>
+  </defs>
+  <g transform="translate(0 40)">
+    <path class="ink" mask="url(#ring)" transform="rotate(17 450 133)" d="M291.4 183.8 A207 79 0 1 1 613.1 181.7 L595.8 175.5 A185 69 0 1 0 293.1 169.6 Z" />
+    <g fill="#00a9b7">
+      <rect x="336" y="64" width="45" height="47" />
+      <rect x="303" y="98" width="52" height="60" />
+      <path d="M318 186 H352 V155 H390 V115 H417 V231 H482 C470 262 440 282 400 282 C355 282 322 245 318 200 Z" />
+    </g>
+    <rect x="385" y="27" width="33" height="35" fill="#f4570c" />
+    <rect x="388" y="188" width="40" height="43" fill="#ffbb00" />
+    <use href="#j" class="ink" mask="url(#jm)" />
+  </g>
 </svg>

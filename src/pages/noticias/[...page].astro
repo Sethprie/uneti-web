@@ -1,0 +1,76 @@
+---
+/** Listado paginado de noticias: /noticias, /noticias/2, /noticias/3… */
+import type { GetStaticPaths, Page } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import EntryCard from '../../components/ui/EntryCard.astro';
+import { NEWS_PER_PAGE } from '../../config/site';
+import { formatDate, getNoticias, type Noticia } from '../../utils/content';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  return paginate(await getNoticias(), { pageSize: NEWS_PER_PAGE });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props as { page: Page<Noticia> };
+const title = page.currentPage > 1 ? `Noticias · página ${page.currentPage}` : 'Noticias';
+---
+
+<BaseLayout title={title} description="Noticias de la UNETI contadas por estudiantes.">
+  <PageHeader
+    title="Noticias"
+    eyebrow="Actualidad"
+    lead="Lo que pasa en la universidad, con fecha y explicado de forma clara."
+    crumbs={[{ label: 'Noticias' }]}
+  />
+
+  <div class="container section">
+    {page.data.length === 0 && <p class="muted">Todavía no hay noticias publicadas.</p>}
+    <div class="grid">
+      {
+        page.data.map((n) => (
+          <EntryCard
+            href={`/noticias/${n.id}`}
+            title={n.data.title}
+            description={n.data.description}
+            kicker={formatDate(n.data.date)}
+            meta={n.data.tags.length ? n.data.tags.map((t) => `#${t}`).join('  ') : undefined}
+          />
+        ))
+      }
+    </div>
+
+    {
+      page.lastPage > 1 && (
+        <nav class="pager" aria-label="Paginación">
+          {page.url.prev ? (
+            <a class="btn btn--ghost" href={page.url.prev}>
+              ← Más recientes
+            </a>
+          ) : (
+            <span />
+          )}
+          <span class="muted">
+            Página {page.currentPage} de {page.lastPage}
+          </span>
+          {page.url.next ? (
+            <a class="btn btn--ghost" href={page.url.next}>
+              Más antiguas →
+            </a>
+          ) : (
+            <span />
+          )}
+        </nav>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 40px;
+  }
+</style>

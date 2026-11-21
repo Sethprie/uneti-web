@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import EntryCard from '../../components/ui/EntryCard.astro';
+import { CATEGORY_COLORS, formatDate, getGuias, getNoticias, getTags, slugify } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const [tags, guias, noticias] = await Promise.all([getTags(), getGuias(), getNoticias()]);
+  return tags.map(({ tag }) => ({
+    params: { tag: slugify(tag) },
+    props: {
+      tag,
+      guias: guias.filter((g) => g.data.tags.includes(tag)),
+      noticias: noticias.filter((n) => n.data.tags.includes(tag)),
+    },
+  }));
+}
+
+const { tag, guias, noticias } = Astro.props;
+---
+
+<BaseLayout title={`#${tag}`} description={`Guías y noticias sobre ${tag}.`}>
+  <PageHeader
+    title={`#${tag}`}
+    eyebrow="Etiqueta"
+    lead={`${guias.length + noticias.length} entradas sobre este tema.`}
+    crumbs={[{ label: 'Etiquetas', href: '/etiquetas' }, { label: tag }]}
+  />
+
+  <div class="container section">
+    {
+      guias.length > 0 && (
+        <section class="block">
+          <h2>Guías</h2>
+          <div class="grid">
+            {guias.map((g) => (
+              <EntryCard
+                href={`/guias/${g.id}`}
+                title={g.data.title}
+                description={g.data.description}
+                kicker={g.data.category}
+                accent={CATEGORY_COLORS[g.data.category]}
+              />
+            ))}
+          </div>
+        </section>
+      )
+    }
+    {
+      noticias.length > 0 && (
+        <section class="block">
+          <h2>Noticias</h2>
+          <div class="grid">
+            {noticias.map((n) => (
+              <EntryCard
+                href={`/noticias/${n.id}`}
+                title={n.data.title}
+                description={n.data.description}
+                kicker={formatDate(n.data.date)}
+              />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .block + .block {
+    margin-top: 48px;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+</style>

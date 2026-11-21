@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import EntryCard from '../../components/ui/EntryCard.astro';
+import { GUIDE_CATEGORIES } from '../../content.config';
+import { CATEGORY_COLORS, getGuias, slugify } from '../../utils/content';
+
+const guias = await getGuias();
+const grupos = GUIDE_CATEGORIES.map((category) => ({
+  category,
+  id: slugify(category),
+  items: guias.filter((g) => g.data.category === category),
+})).filter((g) => g.items.length > 0);
+---
+
+<BaseLayout title="Guías" description="Guías paso a paso escritas por estudiantes de la UNETI.">
+  <PageHeader
+    title="Guías"
+    eyebrow="Paso a paso"
+    lead="Explicaciones prácticas escritas por estudiantes que ya pasaron por ahí. Elige un tema o explora todas."
+    crumbs={[{ label: 'Guías' }]}
+  >
+    {
+      grupos.length > 1 && (
+        <nav class="jump" aria-label="Categorías">
+          {grupos.map((g) => (
+            <a href={`#${g.id}`} style={`--c: ${CATEGORY_COLORS[g.category]}`}>
+              {g.category} <span>{g.items.length}</span>
+            </a>
+          ))}
+        </nav>
+      )
+    }
+  </PageHeader>
+
+  <div class="container section">
+    {grupos.length === 0 && <p class="muted">Todavía no hay guías publicadas.</p>}
+    {
+      grupos.map((g) => (
+        <section class="group" id={g.id} aria-labelledby={`${g.id}-t`}>
+          <h2 id={`${g.id}-t`} style={`--c: ${CATEGORY_COLORS[g.category]}`}>
+            {g.category}
+          </h2>
+          <div class="grid">
+            {g.items.map((guia) => (
+              <EntryCard
+                href={`/guias/${guia.id}`}
+                title={guia.data.title}
+                description={guia.data.description}
+                accent={CATEGORY_COLORS[g.category]}
+              />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .jump a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+
+  .jump a::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background: var(--c);
+  }
+
+  .jump a:hover {
+    border-color: var(--c);
+  }
+
+  .jump span {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+
+  .group + .group {
+    margin-top: 56px;
+  }
+
+  .group h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .group h2::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background: var(--c);
+  }
+</style>

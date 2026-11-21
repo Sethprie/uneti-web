@@ -1,43 +1,55 @@
-# Astro Starter Kit: Minimal
+# UNETI Estudiantil
+
+Web informativa de la UNETI hecha por estudiantes y para estudiantes. Está construida con [Astro](https://astro.build): genera HTML estático, así que es rápida, se indexa bien y se puede alojar gratis.
+
+## Empezar
+
+Requiere [pnpm](https://pnpm.io). El proyecto descarga solo su versión de Node (24) gracias a `devEngines` en `package.json`, así que no importa cuál tengas instalada.
 
 ```sh
-pnpm create astro@latest -- --template minimal
+pnpm install
+pnpm dev       # servidor local en http://localhost:4321
+pnpm build     # genera la web en dist/
+pnpm preview   # sirve dist/ para revisarla antes de publicar
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Estructura
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```
+src/
+├── config/site.ts        Nombre, descripción, menú y enlaces (web oficial, repo, contacto)
+├── content.config.ts     Esquema de las colecciones y categorías de guías
+├── content/
+│   ├── guias/            Una guía = un archivo .md
+│   └── noticias/         Una noticia = un archivo .md
+├── data/recursos.ts      Enlaces de la página Recursos
+├── components/
+│   ├── brand/Logo.astro  Logo UNETI en SVG (se adapta al modo oscuro)
+│   ├── layout/           Cabecera, pie y selector de tema
+│   ├── home/             Bloques de la portada
+│   └── ui/               Tarjetas, etiquetas, migas de pan…
+├── layouts/              Plantilla base y plantilla de artículo
+├── pages/                Cada archivo es una ruta de la web
+├── styles/global.css     Colores (claro/oscuro), tipografía y utilidades
+└── utils/content.ts      Lectura y orden del contenido, fechas, etiquetas
+plantillas/               Plantillas para escribir guías y noticias
+public/                   Archivos tal cual: favicon y logo-uneti.svg
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Publicar una guía o una noticia
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1. Copia `plantillas/guia.md` a `src/content/guias/` (o `plantillas/noticia.md` a `src/content/noticias/`).
+2. Ponle un nombre en minúsculas con guiones: será la URL (`inscripcion.md` → `/guias/inscripcion`).
+3. Rellena los datos de arriba, escribe el texto y cambia `draft: true` a `false`.
 
-Any static assets, like images, can be placed in the `public/` directory.
+Si un campo está mal escrito, `pnpm build` falla y dice cuál es. Así no se publica nada roto.
 
-## 🧞 Commands
+## Personalizar
 
-All commands are run from the root of the project, from a terminal:
+- **Colores:** variables en `src/styles/global.css` (`:root` para el modo claro y `[data-theme='dark']` para el oscuro).
+- **Menú:** `nav` en `src/config/site.ts`.
+- **Categorías de guías:** `GUIDE_CATEGORIES` en `src/content.config.ts` y su color en `CATEGORY_COLORS` (`src/utils/content.ts`).
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## Despliegue en Vercel
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Importa el repositorio en Vercel: detecta Astro solo y no necesita configuración. El dominio de producción se toma automáticamente para el sitemap y las URL canónicas. Si conectas un dominio propio, define la variable de entorno `SITE_URL` (por ejemplo, `https://uneti-estudiantil.com`).

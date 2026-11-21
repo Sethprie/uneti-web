@@ -1,0 +1,39 @@
+---
+/** Cabecera de las páginas internas: migas, título y texto introductorio. */
+import Breadcrumbs from './Breadcrumbs.astro';
+
+interface Props {
+  title: string;
+  lead?: string;
+  eyebrow?: string;
+  crumbs?: { label: string; href?: string }[];
+}
+
+const { title, lead, eyebrow, crumbs } = Astro.props;
+---
+
+<header class="page-header">
+  <div class="container">
+    {crumbs && <Breadcrumbs items={crumbs} />}
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <h1>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</header>
+
+<style>
+  .page-header {
+    padding-block: clamp(32px, 6vw, 56px) clamp(28px, 5vw, 44px);
+    background: var(--bg-soft);
+    border-bottom: 1px solid var(--border);
+  }
+
+  h1 {
+    margin-bottom: 12px;
+  }
+
+  .lead {
+    margin: 0;
+  }
+</style>

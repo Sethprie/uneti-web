@@ -1,0 +1,264 @@
+---
+/** Cabecera fija con logo, menú principal, botón "Participa" y selector de tema. */
+import Logo from '../brand/Logo.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { nav, navCta, site } from '../../config/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`));
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a href="/" class="brand" aria-label={`${site.name}, ir al inicio`}>
+      <Logo variant="mark" class="brand-mark" title="" />
+      <span class="brand-text">
+        <span class="brand-name">{site.shortName}</span>
+        <span class="brand-tag">Estudiantil</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="menu-principal" aria-label="Principal" data-open="false">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a href={navCta.href} class="btn nav-cta" aria-current={isActive(navCta.href) ? 'page' : undefined}>
+        {navCta.label}
+      </a>
+    </nav>
+
+    <div class="actions">
+      <ThemeToggle />
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-controls="menu-principal"
+        aria-expanded="false"
+        aria-label="Abrir menú"
+        data-menu-toggle
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('menu-principal');
+
+  function setOpen(open: boolean) {
+    if (!button || !menu) return;
+    button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    menu.dataset.open = String(open);
+    document.body.classList.toggle('menu-open', open);
+  }
+
+  button?.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+  matchMedia('(min-width: 900px)').addEventListener('change', () => setOpen(false));
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* El desenfoque va en un pseudo-elemento: si estuviera en la cabecera,
+     el menú móvil (position: fixed) quedaría atrapado dentro de ella. */
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(160%) blur(12px);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: var(--header-h);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    text-decoration: none;
+    margin-right: auto;
+  }
+
+  .brand :global(.brand-mark) {
+    width: 46px;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .brand-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .brand-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .nav ul {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav a:not(.btn) {
+    display: block;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-weight: 550;
+    font-size: 0.97rem;
+    text-decoration: none;
+  }
+
+  .nav a:not(.btn):hover {
+    background: var(--bg-soft);
+  }
+
+  .nav a[aria-current='page']:not(.btn) {
+    color: var(--accent);
+    box-shadow: inset 0 -2px 0 var(--accent);
+    border-radius: 0;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-cta {
+    min-height: 40px;
+    padding: 6px 18px;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .menu-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--text);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .menu-toggle[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded='true'] span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle[aria-expanded='true'] span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Móvil y tablet: menú desplegable a pantalla completa */
+  @media (max-width: 899px) {
+    .menu-toggle {
+      display: inline-flex;
+    }
+
+    .nav {
+      position: fixed;
+      inset: var(--header-h) 0 0 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+      padding: 20px var(--gutter) 32px;
+      background: var(--bg);
+      overflow-y: auto;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    }
+
+    .nav[data-open='true'] {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+    }
+
+    .nav ul {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .nav a:not(.btn) {
+      padding: 14px 4px;
+      font-size: 1.15rem;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+    }
+
+    .nav a[aria-current='page']:not(.btn) {
+      box-shadow: inset 4px 0 0 var(--accent);
+      padding-left: 14px;
+    }
+
+    .nav-cta {
+      min-height: 50px;
+    }
+
+    :global(body.menu-open) {
+      overflow: hidden;
+    }
+  }
+</style>

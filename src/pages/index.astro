@@ -1,16 +1,190 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import EntryCard from '../components/ui/EntryCard.astro';
+import { CATEGORY_COLORS, formatDate, getGuias, getNoticias } from '../utils/content';
+
+const noticias = (await getNoticias()).slice(0, 3);
+const guias = (await getGuias()).slice(0, 6);
+
+const secciones = [
+  {
+    href: '/guias',
+    title: 'Guías',
+    text: 'Paso a paso para inscripciones, trámites, estudio y vida en el campus.',
+    color: 'var(--brand-orange)',
+  },
+  {
+    href: '/noticias',
+    title: 'Noticias',
+    text: 'Lo que pasa en la universidad contado de forma clara, con fecha y fuente.',
+    color: 'var(--brand-teal)',
+  },
+  {
+    href: '/recursos',
+    title: 'Recursos',
+    text: 'Herramientas y enlaces útiles que la comunidad usa y recomienda.',
+    color: 'var(--brand-green)',
+  },
+  {
+    href: '/participa',
+    title: 'Participa',
+    text: 'Esta web la hacemos entre todos. Escribe una guía o corrige lo que falte.',
+    color: 'var(--brand-purple)',
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <Hero />
+
+  <section class="section" aria-labelledby="que-hay">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Qué encuentras aquí</span>
+          <h2 id="que-hay">Todo lo que necesitas para tu día a día</h2>
+        </div>
+      </div>
+      <div class="grid features">
+        {
+          secciones.map((s) => (
+            <EntryCard href={s.href} title={s.title} description={s.text} accent={s.color} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    guias.length > 0 && (
+      <section class="section section--soft" aria-labelledby="guias">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Guías</span>
+              <h2 id="guias">Empieza por aquí</h2>
+            </div>
+            <a class="link-arrow" href="/guias">Ver todas las guías →</a>
+          </div>
+          <div class="grid">
+            {guias.map((g) => (
+              <EntryCard
+                href={`/guias/${g.id}`}
+                title={g.data.title}
+                description={g.data.description}
+                kicker={g.data.category}
+                accent={CATEGORY_COLORS[g.data.category]}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    noticias.length > 0 && (
+      <section class="section" aria-labelledby="noticias">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Noticias</span>
+              <h2 id="noticias">Lo último</h2>
+            </div>
+            <a class="link-arrow" href="/noticias">Ver todas las noticias →</a>
+          </div>
+          <div class="grid">
+            {noticias.map((n) => (
+              <EntryCard
+                href={`/noticias/${n.id}`}
+                title={n.data.title}
+                description={n.data.description}
+                kicker={formatDate(n.data.date)}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section cta-section" aria-labelledby="participa">
+    <div class="container">
+      <div class="cta">
+        <div>
+          <h2 id="participa">Esta web es de los estudiantes</h2>
+          <p>
+            Si resolviste un trámite, encontraste un recurso útil o quieres contar algo, compártelo. Lo que
+            escribas hoy le ahorrará tiempo a quien entre mañana.
+          </p>
+        </div>
+        <a class="btn" href="/participa">Quiero participar</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .features {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  }
+
+  .cta-section {
+    padding-top: 0;
+  }
+
+  .cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px 48px;
+    flex-wrap: wrap;
+    padding: clamp(28px, 5vw, 48px);
+    border-radius: 24px;
+    background: var(--brand-navy);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  :global([data-theme='dark']) .cta {
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .cta::after {
+    content: '';
+    position: absolute;
+    right: -30px;
+    top: -30px;
+    width: 140px;
+    height: 140px;
+    border-radius: 24px;
+    background: var(--brand-orange);
+    opacity: 0.18;
+    transform: rotate(18deg);
+  }
+
+  .cta h2 {
+    color: #fff;
+  }
+
+  :global([data-theme='dark']) .cta h2 {
+    color: var(--text);
+  }
+
+  .cta p {
+    margin: 0;
+    max-width: 58ch;
+    opacity: 0.85;
+  }
+
+  .cta .btn {
+    background: var(--brand-orange);
+    border-color: var(--brand-orange);
+    color: var(--brand-navy);
+    position: relative;
+    z-index: 1;
+  }
+</style>

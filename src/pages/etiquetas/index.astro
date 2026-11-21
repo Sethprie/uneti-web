@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import TagList from '../../components/ui/TagList.astro';
+import { getTags } from '../../utils/content';
+
+const tags = await getTags();
+const counts = Object.fromEntries(tags.map((t) => [t.tag, t.count]));
+---
+
+<BaseLayout title="Etiquetas" description="Todos los temas tratados en guías y noticias.">
+  <PageHeader
+    title="Etiquetas"
+    eyebrow="Explora por tema"
+    lead="Cada etiqueta agrupa las guías y noticias que hablan de lo mismo."
+    crumbs={[{ label: 'Etiquetas' }]}
+  />
+  <div class="container section">
+    {tags.length ? <TagList tags={tags.map((t) => t.tag)} counts={counts} /> : <p class="muted">Aún no hay etiquetas.</p>}
+  </div>
+</BaseLayout>

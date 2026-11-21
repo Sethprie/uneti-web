@@ -1,0 +1,109 @@
+---
+/** Tarjeta para listar una noticia o una guía. */
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  /** Texto pequeño sobre el título (categoría, fecha…). */
+  kicker?: string;
+  meta?: string;
+  /** Color de acento de la tarjeta (uno de la franja del logo). */
+  accent?: string;
+}
+
+const { href, title, description, kicker, meta, accent = 'var(--brand-teal)' } = Astro.props;
+---
+
+<article class="card" style={`--card-accent: ${accent}`}>
+  {kicker && <p class="kicker">{kicker}</p>}
+  <h3>
+    <a href={href}>{title}</a>
+  </h3>
+  <p class="desc">{description}</p>
+  {meta && <p class="meta">{meta}</p>}
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    padding: 24px 24px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 0;
+    width: 40px;
+    height: 4px;
+    border-radius: 0 0 4px 4px;
+    background: var(--card-accent);
+  }
+
+  .card:hover {
+    border-color: var(--card-accent);
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+  }
+
+  .card:focus-within {
+    border-color: var(--card-accent);
+  }
+
+  .kicker {
+    margin: 4px 0 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  /* Toda la tarjeta es clicable sin anidar enlaces */
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  h3 a:focus-visible {
+    outline: none;
+  }
+
+  .card:has(a:focus-visible) {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .desc {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    flex: 1;
+  }
+
+  .meta {
+    margin: 10px 0 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+</style>

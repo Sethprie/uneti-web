@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import { site } from '../config/site';
+
+const principios = [
+  {
+    title: 'Hecho por estudiantes',
+    text: 'Quien escribe aquí estudia en la UNETI. Contamos las cosas como las vivimos, con lenguaje sencillo.',
+    color: 'var(--brand-orange)',
+  },
+  {
+    title: 'Pensado para durar',
+    text: 'Cada guía y noticia queda guardada con su fecha. Lo que se escribe hoy sigue sirviendo a las próximas generaciones.',
+    color: 'var(--brand-teal)',
+  },
+  {
+    title: 'Abierto a todos',
+    text: 'Cualquiera puede proponer una guía, corregir un error o sugerir un recurso.',
+    color: 'var(--brand-green)',
+  },
+  {
+    title: 'Con fuentes',
+    text: 'Cuando algo depende de la universidad, enlazamos la fuente oficial y la fecha en que lo comprobamos.',
+    color: 'var(--brand-purple)',
+  },
+];
+---
+
+<BaseLayout title="Sobre el proyecto" description={`Qué es ${site.name} y quién lo hace.`}>
+  <PageHeader
+    title="Sobre el proyecto"
+    eyebrow="Quiénes somos"
+    lead={`${site.name} nació para reunir en un solo lugar lo que los estudiantes de la UNETI nos contamos de boca en boca.`}
+    crumbs={[{ label: 'Sobre el proyecto' }]}
+  />
+
+  <div class="container section">
+    <div class="grid principios">
+      {
+        principios.map((p) => (
+          <div class="principio" style={`--c: ${p.color}`}>
+            <h2>{p.title}</h2>
+            <p>{p.text}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="prose note">
+      <h2>Un aviso importante</h2>
+      <p>
+        Este sitio lo mantiene la comunidad estudiantil. Para fechas, requisitos o normativas, consulta siempre
+        los canales oficiales de la universidad: las guías te orientan, pero la última palabra la tiene la
+        UNETI.
+        {
+          site.officialUrl && (
+            <>
+              {' '}
+              Puedes visitar la <a href={site.officialUrl}>web oficial</a>.
+            </>
+          )
+        }
+      </p>
+      <p>¿Quieres sumarte al equipo? <a href="/participa">Mira cómo participar</a>.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .principios {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    margin-bottom: 56px;
+  }
+
+  .principio {
+    padding: 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--c);
+    background: var(--surface);
+  }
+
+  .principio h2 {
+    font-size: 1.5rem;
+  }
+
+  .principio p {
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  .note h2 {
+    margin-top: 0;
+  }
+</style>

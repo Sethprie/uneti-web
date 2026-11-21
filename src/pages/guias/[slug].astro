@@ -1,0 +1,32 @@
+---
+import { render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getGuias, readingTime, slugify, type Guia } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const guias = await getGuias();
+  return guias.map((guia) => ({ params: { slug: guia.id }, props: { guia } }));
+}
+
+const { guia } = Astro.props as { guia: Guia };
+const { Content } = await render(guia);
+const { data } = guia;
+---
+
+<ArticleLayout
+  title={data.title}
+  description={data.description}
+  crumbs={[
+    { label: 'Guías', href: '/guias' },
+    { label: data.category, href: `/guias#${slugify(data.category)}` },
+    { label: data.title },
+  ]}
+  kicker={data.category}
+  author={data.author}
+  updated={data.updated}
+  minutes={readingTime(guia.body)}
+  tags={data.tags}
+  back={{ href: '/guias', label: 'Volver a las guías' }}
+>
+  <Content />
+</ArticleLayout>

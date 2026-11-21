@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="200 18 532 762" role="img" aria-labelledby="uneti-logo-title">
+  <title id="uneti-logo-title">UNETI</title>
+  <style>
+    .ink { fill: #0d1f4f; }
+    @media (prefers-color-scheme: dark) {
+      .ink { fill: #ffffff; }
+    }
+  </style>
+  <defs>
+    <path id="uneti-j" d="M520 38 H579 Q593 38 593 52 V205 C593 285 530 336 455 336 C405 336 360 305 340 270 C360 284 385 291 412 291 C455 291 498 245 498 200 V60 Q498 38 520 38 Z" />
+    <clipPath id="uneti-lower"><rect x="480" y="150" width="220" height="220" /></clipPath>
+    <!-- La órbita pasa por detrás de la J abajo y del cuadro naranja arriba -->
+    <mask id="uneti-ring-mask" maskUnits="userSpaceOnUse" x="200" y="0" width="540" height="400">
+      <rect x="200" y="0" width="540" height="400" fill="#fff" />
+      <rect x="377" y="19" width="49" height="51" fill="#000" />
+      <g clip-path="url(#uneti-lower)">
+        <use href="#uneti-j" fill="#000" stroke="#000" stroke-width="16" />
+      </g>
+    </mask>
+    <!-- …y por delante de la J arriba, con una línea de separación -->
+    <mask id="uneti-j-mask" maskUnits="userSpaceOnUse" x="200" y="0" width="540" height="400">
+      <rect x="200" y="0" width="540" height="400" fill="#fff" />
+      <path transform="rotate(17 450 133)" d="M496.9 70.2 A181 65 0 0 1 606.7 100.5" fill="none" stroke="#000" stroke-width="8" />
+    </mask>
+  </defs>
+
+  <!-- Órbita -->
+  <path class="ink" mask="url(#uneti-ring-mask)" transform="rotate(17 450 133)"
+    d="M291.4 183.8 A207 79 0 1 1 613.1 181.7 L595.8 175.5 A185 69 0 1 0 293.1 169.6 Z" />
+
+  <!-- Píxeles y "agua" turquesa -->
+  <g fill="#00a9b7">
+    <rect x="336" y="64" width="45" height="47" />
+    <rect x="303" y="98" width="52" height="60" />
+    <path d="M318 186 H352 V155 H390 V115 H417 V231 H482 C470 262 440 282 400 282 C355 282 322 245 318 200 Z" />
+  </g>
+  <rect x="385" y="27" width="33" height="35" fill="#f4570c" />
+  <rect x="388" y="188" width="40" height="43" fill="#ffbb00" />
+
+  <!-- J -->
+  <use href="#uneti-j" class="ink" mask="url(#uneti-j-mask)" />
+
+  <!-- U -->
+  <path fill="#f4570c" d="M208 360 H239.5 V640 Q239.5 651 251 651 H268 Q279 651 279 640 V360 H310.5 V647 Q310.5 677 280 677 H238 Q208 677 208 647 Z" />
+  <!-- N E T I -->
+  <g class="ink">
+    <rect x="326" y="361" width="32" height="314" />
+    <rect x="397" y="361" width="31" height="314" />
+    <polygon points="358,361 397,556 397,675 358,491" />
+    <rect x="446" y="361" width="30" height="314" />
+    <polygon points="446,361 537,361 523,389 446,389" />
+    <polygon points="446,494 526,494 508,525 446,525" />
+    <polygon points="446,646 536,646 520,675 446,675" />
+    <polygon points="549,361 676,361 676,389 545,389 545,365" />
+    <rect x="590" y="361" width="31" height="314" />
+    <rect x="690" y="361" width="29" height="314" />
+  </g>
+
+  <!-- Franja de colores -->
+  <rect x="207" y="700" width="75" height="75" rx="9" fill="#00a01a" />
+  <rect x="295" y="700" width="75" height="75" rx="9" fill="#ffbb00" />
+  <rect x="383" y="700" width="75" height="75" rx="9" fill="#641556" />
+  <rect x="471" y="700" width="75" height="75" rx="9" fill="#00a9b7" />
+  <rect x="559" y="700" width="75" height="75" rx="9" class="ink" />
+  <rect x="647" y="700" width="75" height="75" rx="9" fill="#f4570c" />
+</svg>

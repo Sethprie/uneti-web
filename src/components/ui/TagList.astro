@@ -1,0 +1,61 @@
+---
+import { slugify } from '../../utils/content';
+
+interface Props {
+  tags: string[];
+  /** Muestra el número de entradas junto a cada etiqueta. */
+  counts?: Record<string, number>;
+}
+
+const { tags, counts } = Astro.props;
+---
+
+{
+  tags.length > 0 && (
+    <ul class="tags">
+      {tags.map((tag) => (
+        <li>
+          <a href={`/etiquetas/${slugify(tag)}`}>
+            #{tag}
+            {counts?.[tag] !== undefined && <span class="count">{counts[tag]}</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.875rem;
+    font-weight: 550;
+    text-decoration: none;
+  }
+
+  a:hover {
+    border-color: var(--brand-teal);
+    color: var(--link);
+  }
+
+  .count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+</style>

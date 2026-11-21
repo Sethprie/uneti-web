@@ -1,0 +1,134 @@
+---
+import Logo from '../brand/Logo.astro';
+import { nav, navCta, site } from '../../config/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container grid-footer">
+    <div class="about">
+      <Logo variant="full" class="footer-logo" />
+      <p>
+        <strong>{site.name}</strong> es un proyecto hecho por estudiantes, para estudiantes. Compartimos lo que
+        nos habría gustado saber al empezar.
+      </p>
+    </div>
+
+    <nav aria-label="Pie de página">
+      <h2 class="footer-title">Secciones</h2>
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        <li><a href={navCta.href}>{navCta.label}</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="footer-title">Enlaces</h2>
+      <ul>
+        <li><a href="/etiquetas">Todas las etiquetas</a></li>
+        {site.officialUrl && <li><a href={site.officialUrl} rel="noopener">Web oficial de la UNETI</a></li>}
+        {site.repoUrl && <li><a href={site.repoUrl} rel="noopener">Código del proyecto</a></li>}
+        {site.contact && <li><a href={site.contact}>Contacto</a></li>}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container bottom">
+    <div class="brand-stripe" aria-hidden="true">
+      <span style="background: var(--brand-green)"></span>
+      <span style="background: var(--brand-yellow)"></span>
+      <span style="background: var(--brand-purple)"></span>
+      <span style="background: var(--brand-teal)"></span>
+      <span style="background: var(--logo-ink)"></span>
+      <span style="background: var(--brand-orange)"></span>
+    </div>
+    <p>© {year} {site.name}. Hecho con cariño por la comunidad estudiantil.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: auto;
+    background: var(--bg-soft);
+    border-top: 1px solid var(--border);
+    padding-top: 56px;
+    font-size: 0.95rem;
+  }
+
+  .grid-footer {
+    display: grid;
+    gap: 36px;
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  .about p {
+    color: var(--text-muted);
+    max-width: 44ch;
+  }
+
+  .about :global(.footer-logo) {
+    width: 72px;
+    margin-bottom: 16px;
+  }
+
+  .footer-title {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  ul a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  ul a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    padding-block: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+
+  .bottom p {
+    margin: 0;
+  }
+
+  .bottom .brand-stripe span {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 760px) {
+    .grid-footer {
+      grid-template-columns: 1fr 1fr;
+    }
+    .about {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

@@ -1,0 +1,381 @@
+/*
+ * Estilos globales y tokens de diseño.
+ * La paleta sale del logo de la UNETI: azul marino, naranja, turquesa,
+ * amarillo, morado y verde. Los componentes solo usan variables (--*),
+ * así el modo claro y el oscuro se cambian en un único sitio.
+ */
+
+@import '@fontsource-variable/inter';
+@import '@fontsource/barlow-condensed/600.css';
+@import '@fontsource/barlow-condensed/700.css';
+
+:root {
+  /* Colores de marca (fijos en ambos temas) */
+  --brand-navy: #0d1f4f;
+  --brand-orange: #f4570c;
+  --brand-teal: #00a9b7;
+  --brand-yellow: #ffbb00;
+  --brand-purple: #641556;
+  --brand-green: #00a01a;
+
+  /* Tema claro */
+  --bg: #ffffff;
+  --bg-soft: #f4f6fb;
+  --surface: #ffffff;
+  --text: #0d1f4f;
+  --text-muted: #4b587a;
+  --border: #dfe4ef;
+  --link: #00727c;
+  --accent: #d9480b; /* naranja con contraste suficiente sobre blanco */
+  --btn-bg: var(--brand-navy);
+  --btn-text: #ffffff;
+  --btn-alt-bg: transparent;
+  --btn-alt-text: var(--brand-navy);
+  --logo-ink: var(--brand-navy);
+  --focus: var(--brand-orange);
+  --shadow: 0 1px 2px rgb(13 31 79 / 0.06), 0 8px 24px rgb(13 31 79 / 0.06);
+
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --container: 1120px;
+  --gutter: clamp(16px, 4vw, 32px);
+  --header-h: 68px;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #08122e;
+  --bg-soft: #0d1a3d;
+  --surface: #0f1d44;
+  --text: #edf1fa;
+  --text-muted: #a7b2cf;
+  --border: #22315e;
+  --link: #46d3dd;
+  --accent: #ff7a3d;
+  --btn-bg: var(--brand-orange);
+  --btn-text: #08122e;
+  --btn-alt-bg: transparent;
+  --btn-alt-text: #edf1fa;
+  --logo-ink: #ffffff;
+  --focus: var(--brand-yellow);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
+
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+main {
+  flex: 1;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+}
+h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+h3 {
+  font-size: 1.45rem;
+}
+
+p {
+  margin: 0 0 1em;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--brand-yellow);
+  color: var(--brand-navy);
+}
+
+/* ---------- Utilidades ---------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: clamp(48px, 8vw, 88px);
+}
+
+.section--soft {
+  background: var(--bg-soft);
+}
+
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.section-head h2 {
+  margin: 0;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.lead {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 2px solid var(--btn-bg);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-weight: 650;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.btn--ghost {
+  background: var(--btn-alt-bg);
+  color: var(--btn-alt-text);
+  border-color: var(--border);
+}
+
+.btn--ghost:hover {
+  border-color: var(--btn-alt-text);
+}
+
+.link-arrow {
+  font-weight: 650;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.link-arrow:hover {
+  text-decoration: underline;
+}
+
+/* Franja de colores del logo, usada como detalle decorativo */
+.brand-stripe {
+  display: flex;
+  gap: 6px;
+}
+
+.brand-stripe span {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+}
+
+/* ---------- Texto largo (entradas en Markdown) ---------- */
+
+.prose {
+  max-width: 70ch;
+}
+
+.prose h2 {
+  font-size: 2rem;
+  margin-top: 1.6em;
+}
+
+.prose h3 {
+  margin-top: 1.4em;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.3em;
+  margin: 0 0 1em;
+}
+
+.prose li {
+  margin-bottom: 0.35em;
+}
+
+.prose blockquote {
+  margin: 1.5em 0;
+  padding: 12px 20px;
+  border-left: 4px solid var(--brand-teal);
+  background: var(--bg-soft);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.prose blockquote p:last-child {
+  margin: 0;
+}
+
+.prose code {
+  font-size: 0.9em;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+}
+
+.prose pre {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  font-size: 0.9rem;
+}
+
+.prose pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.prose img {
+  border-radius: var(--radius);
+  height: auto;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2em 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.95rem;
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.prose th {
+  background: var(--bg-soft);
+}
+
+/* Bloques de código: Shiki genera ambos temas; elegimos según data-theme */
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+.astro-code {
+  border: 1px solid var(--border);
+}

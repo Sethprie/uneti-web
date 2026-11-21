@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import { recursos } from '../data/recursos';
+import { slugify } from '../utils/content';
+
+const grupos = recursos.filter((g) => g.items.length > 0);
+---
+
+<BaseLayout title="Recursos" description="Herramientas y enlaces útiles recomendados por estudiantes.">
+  <PageHeader
+    title="Recursos"
+    eyebrow="Caja de herramientas"
+    lead="Enlaces que la comunidad usa y recomienda. ¿Echas algo en falta? Propónlo en Participa."
+    crumbs={[{ label: 'Recursos' }]}
+  />
+
+  <div class="container section">
+    {
+      grupos.map((g) => (
+        <section class="group" id={slugify(g.title)} style={`--c: ${g.color}`}>
+          <div class="group-head">
+            <h2>{g.title}</h2>
+            <p class="muted">{g.description}</p>
+          </div>
+          <ul class="list">
+            {g.items.map((r) => (
+              <li>
+                <a href={r.url} target="_blank" rel="noopener noreferrer">
+                  <span class="title">
+                    {r.title}
+                    <span class="ext" aria-hidden="true">↗</span>
+                    <span class="sr-only">(se abre en una pestaña nueva)</span>
+                  </span>
+                  <span class="desc">{r.description}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .group {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 16px 48px;
+  }
+
+  .group + .group {
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+
+  .group-head h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.9rem;
+  }
+
+  .group-head h2::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    background: var(--c);
+  }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .list a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .list a:hover {
+    border-color: var(--c);
+  }
+
+  .title {
+    font-weight: 650;
+    color: var(--text);
+  }
+
+  .ext {
+    color: var(--text-muted);
+    font-size: 0.85em;
+    margin-left: 4px;
+  }
+
+  .desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 760px) {
+    .group {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
