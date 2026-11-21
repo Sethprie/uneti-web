@@ -9,13 +9,37 @@ export const site = {
   description:
     'Guías, noticias y recursos de la UNETI, hechos por estudiantes y para estudiantes.',
   locale: 'es',
-  /** Web oficial de la universidad. Déjalo vacío para no mostrar el enlace. */
-  officialUrl: '',
+  /** Web oficial de la universidad. Se destaca en la barra superior de todas las páginas. */
+  officialUrl: 'https://www.uneti.edu.ve/',
+  officialLabel: 'www.uneti.edu.ve',
   /** Repositorio del proyecto, para la página "Participa". Vacío = no se muestra. */
   repoUrl: '',
   /** Correo o formulario de contacto del equipo. Vacío = no se muestra. */
   contact: '',
 };
+
+/**
+ * Canales de la comunidad. Mientras `url` esté vacío, se muestran como
+ * "Próximamente" y sin enlace. Pega aquí la invitación cuando la tengas.
+ */
+export const community = [
+  {
+    id: 'discord',
+    name: 'Servidor de Discord',
+    description: 'Canales por carrera y materia, dudas, apuntes y salas de estudio.',
+    cta: 'Entrar al Discord',
+    url: '', // TODO: invitación de Discord, ej. https://discord.gg/xxxxxxx
+    color: '#5865f2',
+  },
+  {
+    id: 'whatsapp',
+    name: 'Comunidad de WhatsApp',
+    description: 'Avisos importantes y grupos por carrera, directo en tu teléfono.',
+    cta: 'Unirme en WhatsApp',
+    url: '', // TODO: enlace de la comunidad, ej. https://chat.whatsapp.com/xxxxxxx
+    color: '#1faa59',
+  },
+] as const;
 
 export const nav = [
   { href: '/', label: 'Inicio' },

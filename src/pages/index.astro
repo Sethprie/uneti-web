@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/Hero.astro';
+import Community from '../components/home/Community.astro';
 import EntryCard from '../components/ui/EntryCard.astro';
 import { CATEGORY_COLORS, formatDate, getGuias, getNoticias } from '../utils/content';
 
@@ -37,6 +38,10 @@ const secciones = [
 
 <BaseLayout>
   <Hero />
+
+  <div class="section container community-wrap">
+    <Community />
+  </div>
 
   <section class="section" aria-labelledby="que-hay">
     <div class="container">
@@ -126,6 +131,10 @@ const secciones = [
 </BaseLayout>
 
 <style>
+  .community-wrap {
+    padding-bottom: 0;
+  }
+
   .features {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
   }

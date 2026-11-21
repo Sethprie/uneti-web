@@ -57,7 +57,11 @@ const principios = [
           site.officialUrl && (
             <>
               {' '}
-              Puedes visitar la <a href={site.officialUrl}>web oficial</a>.
+              La web oficial es{' '}
+              <a href={site.officialUrl} target="_blank" rel="noopener">
+                <strong>{site.officialLabel}</strong>
+              </a>
+              .
             </>
           )
         }

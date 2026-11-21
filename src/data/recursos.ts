@@ -20,9 +20,15 @@ export interface GrupoRecursos {
 export const recursos: GrupoRecursos[] = [
   {
     title: 'Universidad',
-    description: 'Enlaces oficiales de la UNETI. Añade aquí la web, el sistema académico y las redes oficiales.',
+    description: 'Canales oficiales de la UNETI. Para fechas, requisitos y normativas, la fuente es siempre la web oficial.',
     color: 'var(--brand-orange)',
-    items: [],
+    items: [
+      {
+        title: 'Web oficial de la UNETI',
+        url: 'https://www.uneti.edu.ve/',
+        description: 'www.uneti.edu.ve: información institucional, carreras y anuncios oficiales.',
+      },
+    ],
   },
   {
     title: 'Investigar y citar',

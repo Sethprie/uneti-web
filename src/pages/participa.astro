@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
+import Community from '../components/home/Community.astro';
 import { site } from '../config/site';
 
 const pasos = [
@@ -44,6 +45,12 @@ const pasos = [
       }
     </ol>
 
+    <div class="community-block">
+      <h2>Habla con el equipo</h2>
+      <p class="muted">La forma más rápida de proponer algo es escribirnos en la comunidad.</p>
+      <Community heading={false} />
+    </div>
+
     <div class="prose">
       <h2>Para quien sí programa</h2>
       <p>
@@ -71,6 +78,14 @@ const pasos = [
 </BaseLayout>
 
 <style>
+  .community-block {
+    margin-bottom: 56px;
+  }
+
+  .community-block h2 {
+    margin-bottom: 6px;
+  }
+
   .pasos {
     list-style: none;
     padding: 0;

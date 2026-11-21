@@ -1,0 +1,68 @@
+---
+/** Aviso fijo en todas las páginas: este sitio es estudiantil y esta es la web oficial. */
+import { site } from '../../config/site';
+---
+
+{
+  site.officialUrl && (
+    <div class="official-bar" role="note" aria-label="Web oficial de la universidad">
+      <div class="container inner">
+        <span class="badge">Importante</span>
+        <p>
+          Este sitio es estudiantil, <strong>no oficial</strong>. La web oficial de la UNETI es{' '}
+          <a href={site.officialUrl} target="_blank" rel="noopener">
+            {site.officialLabel}
+            <span aria-hidden="true"> ↗</span>
+            <span class="sr-only">(se abre en una pestaña nueva)</span>
+          </a>
+        </p>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .official-bar {
+    background: var(--brand-yellow);
+    color: var(--brand-navy);
+    font-size: 0.92rem;
+    line-height: 1.4;
+  }
+
+  .inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 12px;
+    flex-wrap: wrap;
+    padding-block: 9px;
+    text-align: center;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .badge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--brand-navy);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  a {
+    color: var(--brand-navy);
+    font-weight: 800;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    white-space: nowrap;
+  }
+
+  a:focus-visible {
+    outline-color: var(--brand-navy);
+  }
+</style>
