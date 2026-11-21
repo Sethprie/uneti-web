@@ -60,3 +60,9 @@ Las contribuciones son bienvenidas, tanto de contenido (guías, noticias, recurs
 ## Despliegue
 
 La web se publica en Vercel mediante una GitHub Action, y solo con los commits que la persona dueña del repositorio sube a `master`. El proceso y la configuración inicial están en [DEPLOY.md](DEPLOY.md).
+
+## Licencia
+
+- **Código:** [MIT](LICENSE).
+- **Contenido** (guías, noticias, plantillas y textos): [CC BY 4.0](LICENSE-CONTENT.md).
+- El nombre y el logo de la UNETI pertenecen a la universidad y no están cubiertos por estas licencias.

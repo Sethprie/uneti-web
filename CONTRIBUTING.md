@@ -48,3 +48,7 @@ Los *pull requests* no despliegan nada: la web solo se publica cuando el cambio 
 
 - Colores y tamaños se toman de las variables de `src/styles/global.css`, sin valores sueltos en los componentes, para que el modo oscuro siga funcionando.
 - Los textos de la web van en español. Los nombres de archivos de contenido, sin tildes ni espacios.
+
+## Licencia de las contribuciones
+
+Al contribuir, se acepta que el código se publique bajo la licencia [MIT](LICENSE) y el contenido bajo [CC BY 4.0](LICENSE-CONTENT.md). Solo deben enviarse textos e imágenes propios o con una licencia compatible, indicando su fuente.
