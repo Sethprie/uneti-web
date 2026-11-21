@@ -1,55 +1,62 @@
 # UNETI Estudiantil
 
-Web informativa de la UNETI hecha por estudiantes y para estudiantes. Está construida con [Astro](https://astro.build): genera HTML estático, así que es rápida, se indexa bien y se puede alojar gratis.
+Web informativa de la UNETI hecha por estudiantes y para estudiantes: guías, noticias y recursos para la comunidad universitaria.
 
-## Empezar
+Es un proyecto de código abierto y **no es la web oficial de la universidad**. La web oficial es [www.uneti.edu.ve](https://www.uneti.edu.ve/).
 
-Requiere [pnpm](https://pnpm.io). El proyecto descarga solo su versión de Node (24) gracias a `devEngines` en `package.json`, así que no importa cuál tengas instalada.
+Está construida con [Astro](https://astro.build) y genera HTML estático. Por eso es rápida, se indexa bien en buscadores y puede alojarse sin coste.
+
+## Requisitos
+
+- [pnpm](https://pnpm.io) 12 o superior.
+- No hace falta instalar una versión concreta de Node: el proyecto declara Node 24 en `devEngines` y pnpm lo descarga solo para este proyecto.
+
+## Desarrollo local
 
 ```sh
 pnpm install
 pnpm dev       # servidor local en http://localhost:4321
 pnpm build     # genera la web en dist/
-pnpm preview   # sirve dist/ para revisarla antes de publicar
+pnpm preview   # sirve dist/ para revisar la compilación
 ```
 
 ## Estructura
 
 ```
 src/
-├── config/site.ts        Nombre, descripción, menú y enlaces (web oficial, repo, contacto)
+├── config/site.ts        Nombre, descripción, menú, web oficial y canales de la comunidad
 ├── content.config.ts     Esquema de las colecciones y categorías de guías
 ├── content/
 │   ├── guias/            Una guía = un archivo .md
 │   └── noticias/         Una noticia = un archivo .md
 ├── data/recursos.ts      Enlaces de la página Recursos
 ├── components/
-│   ├── brand/Logo.astro  Logo UNETI en SVG (se adapta al modo oscuro)
-│   ├── layout/           Cabecera, pie y selector de tema
-│   ├── home/             Bloques de la portada
+│   ├── brand/Logo.astro  Logo de la UNETI en SVG (se adapta al modo oscuro)
+│   ├── layout/           Barra de la web oficial, cabecera, pie y selector de tema
+│   ├── home/             Bloques de la portada y de la comunidad
 │   └── ui/               Tarjetas, etiquetas, migas de pan…
 ├── layouts/              Plantilla base y plantilla de artículo
 ├── pages/                Cada archivo es una ruta de la web
-├── styles/global.css     Colores (claro/oscuro), tipografía y utilidades
-└── utils/content.ts      Lectura y orden del contenido, fechas, etiquetas
+├── styles/global.css     Colores (claro y oscuro), tipografía y utilidades
+└── utils/content.ts      Lectura y orden del contenido, fechas y etiquetas
 plantillas/               Plantillas para escribir guías y noticias
-public/                   Archivos tal cual: favicon y logo-uneti.svg
+public/                   Archivos servidos tal cual: favicon y logo-uneti.svg
 ```
 
-## Publicar una guía o una noticia
+## Configuración
 
-1. Copia `plantillas/guia.md` a `src/content/guias/` (o `plantillas/noticia.md` a `src/content/noticias/`).
-2. Ponle un nombre en minúsculas con guiones: será la URL (`inscripcion.md` → `/guias/inscripcion`).
-3. Rellena los datos de arriba, escribe el texto y cambia `draft: true` a `false`.
+| Qué | Dónde |
+| --- | --- |
+| Web oficial, repositorio y contacto | `site` en `src/config/site.ts` |
+| Enlaces de Discord y WhatsApp | `community` en `src/config/site.ts` (sin URL se muestran como "Próximamente") |
+| Menú principal | `nav` en `src/config/site.ts` |
+| Categorías de guías y sus colores | `GUIDE_CATEGORIES` en `src/content.config.ts` y `CATEGORY_COLORS` en `src/utils/content.ts` |
+| Colores del tema | Variables de `src/styles/global.css`: `:root` para el modo claro y `[data-theme='dark']` para el oscuro |
 
-Si un campo está mal escrito, `pnpm build` falla y dice cuál es. Así no se publica nada roto.
+## Contribuir
 
-## Personalizar
+Las contribuciones son bienvenidas, tanto de contenido (guías, noticias, recursos) como de código. El proceso está en [CONTRIBUTING.md](CONTRIBUTING.md).
 
-- **Colores:** variables en `src/styles/global.css` (`:root` para el modo claro y `[data-theme='dark']` para el oscuro).
-- **Menú:** `nav` en `src/config/site.ts`.
-- **Categorías de guías:** `GUIDE_CATEGORIES` en `src/content.config.ts` y su color en `CATEGORY_COLORS` (`src/utils/content.ts`).
+## Despliegue
 
-## Despliegue en Vercel
-
-Se publica con una GitHub Action en una cuenta de Vercel aparte, y solo con los commits del dueño del repositorio. La configuración paso a paso está en [DEPLOY.md](DEPLOY.md).
+La web se publica en Vercel mediante una GitHub Action, y solo con los commits que la persona dueña del repositorio sube a `master`. El proceso y la configuración inicial están en [DEPLOY.md](DEPLOY.md).

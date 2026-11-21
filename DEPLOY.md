@@ -1,62 +1,66 @@
-# Despliegue en Vercel
+# Despliegue
 
-La web se publica en una **cuenta de Vercel aparte**, sin conectar Vercel a GitHub. Quien publica es una GitHub Action (`.github/workflows/deploy.yml`) que sube la web con un token.
+La web se publica en [Vercel](https://vercel.com) mediante una GitHub Action (`.github/workflows/deploy.yml`). Vercel no se conecta al repositorio: la Action compila la web y la sube con un token.
 
-Así:
+Este documento es para quien mantiene el proyecto. Para contribuir no hace falta nada de esto (ver [CONTRIBUTING.md](CONTRIBUTING.md)).
 
-- Esta web no comparte límites con los proyectos de tu otra cuenta de Vercel.
-- **Solo se despliegan los commits que empujas tú** a `master`. Los pushes de otras personas y los pull requests desde forks no publican nada.
+## Cómo funciona
 
-> El plan Hobby de Vercel no cobra por tráfico: si se superan los límites gratuitos, el proyecto se pausa en vez de facturar.
+- Cada push a `master` hecho por la **persona dueña del repositorio** compila y publica la web en producción.
+- Los pushes de otras personas, aunque tengan permiso de escritura, no despliegan: el trabajo se salta.
+- Los *pull requests*, incluidos los de *forks*, no despliegan ni tienen acceso a los secretos.
+- `vercel.json` desactiva los despliegues automáticos de Vercel por Git, por si alguien conecta el repositorio desde el panel de Vercel.
+- Si llegan varios pushes seguidos, solo se publica el último.
+- El despliegue también puede lanzarse a mano desde **Actions → Desplegar en Vercel → Run workflow**.
 
-## Configuración (una sola vez)
+Se recomienda usar una **cuenta de Vercel dedicada al proyecto**. Los límites del plan gratuito (Hobby) son por cuenta, así que un pico de tráfico en esta web no afectará a otros proyectos. El plan Hobby no factura por exceso de uso: al superar los límites, el proyecto se pausa.
 
-### 1. Crea la cuenta de Vercel
+## Configuración inicial
 
-En [vercel.com/signup](https://vercel.com/signup), regístrate **con un correo, no con GitHub**. Así no choca con tu otra cuenta, que ya tiene GitHub vinculado.
+Se hace una sola vez.
 
-### 2. Crea el proyecto en Vercel desde tu equipo
+### 1. Cuenta de Vercel
 
-En la carpeta del proyecto:
+Crear la cuenta en [vercel.com/signup](https://vercel.com/signup) **con correo electrónico, no con GitHub**. Una cuenta de GitHub solo puede vincularse a una cuenta de Vercel, y este flujo no necesita esa vinculación.
+
+### 2. Proyecto en Vercel
+
+Desde la carpeta del repositorio:
 
 ```sh
 pnpm dlx vercel@latest login
 pnpm dlx vercel@latest link
 ```
 
-- En `login`, entra con el correo de la cuenta nueva.
-- En `link`, elige **crear un proyecto nuevo** (por ejemplo `uneti-web`). Si pregunta si quieres conectar un repositorio de Git, responde **no**.
+- En `login`, entrar con el correo de la cuenta del proyecto.
+- En `link`, crear un proyecto nuevo (por ejemplo, `uneti-web`). Si pregunta por conectar un repositorio de Git, responder **no**.
 
-Esto crea el archivo `.vercel/project.json`, que ya está ignorado en Git. Ábrelo y copia dos valores:
+El comando genera `.vercel/project.json` (ignorado por Git), con los valores `orgId` y `projectId`.
 
-- `orgId` → será el secreto `VERCEL_ORG_ID`
-- `projectId` → será el secreto `VERCEL_PROJECT_ID`
+### 3. Token de Vercel
 
-### 3. Crea un token de Vercel
+En Vercel, **Account Settings → Tokens → Create**. Asignarle un nombre descriptivo (por ejemplo, `github-actions`) y el alcance de la cuenta del proyecto. El token solo se muestra una vez.
 
-En Vercel, ve a **Account Settings → Tokens → Create**. Ponle un nombre (por ejemplo `github-actions`), elige el alcance de la cuenta nueva y copia el token. Solo se muestra una vez.
+### 4. Secretos en GitHub
 
-### 4. Guarda los tres secretos en GitHub
+En el repositorio, **Settings → Secrets and variables → Actions → New repository secret**:
 
-En tu repositorio de GitHub, ve a **Settings → Secrets and variables → Actions → New repository secret** y crea:
-
-| Nombre | Valor |
+| Secreto | Valor |
 | --- | --- |
-| `VERCEL_TOKEN` | el token del paso 3 |
+| `VERCEL_TOKEN` | Token del paso 3 |
 | `VERCEL_ORG_ID` | `orgId` de `.vercel/project.json` |
 | `VERCEL_PROJECT_ID` | `projectId` de `.vercel/project.json` |
 
-Opcional: si conectas un dominio propio, crea en la pestaña **Variables** (no en Secrets) una variable `SITE_URL` con el dominio, por ejemplo `https://uneti-estudiantil.com`. Sin ella se usa el dominio `.vercel.app` del proyecto.
+### 5. Dominio (opcional)
 
-### 5. Publica
+Sin configuración adicional, la web usa el dominio `.vercel.app` del proyecto para el sitemap y las URL canónicas. Con un dominio propio, crear en **Settings → Secrets and variables → Actions → Variables** una variable `SITE_URL` con la dirección completa, por ejemplo `https://uneti-estudiantil.com`.
 
-Haz push a `master`. En la pestaña **Actions** de GitHub verás el despliegue "Desplegar en Vercel". Al terminar, la web queda publicada en el dominio del proyecto en Vercel.
+### 6. Primer despliegue
 
-También puedes lanzarlo a mano desde **Actions → Desplegar en Vercel → Run workflow**.
+Hacer push a `master`. El progreso se ve en la pestaña **Actions** del repositorio y, al terminar, la web queda publicada en el dominio del proyecto.
 
-## Quién puede desplegar
+## Ajustes
 
-- El workflow solo se ejecuta si quien empuja (`github.actor`) es el **dueño del repositorio**. Si alguien con permiso de escritura hace push, el trabajo se salta.
-- Si el repositorio está en una **organización** y no en tu cuenta personal, cambia en `deploy.yml` `github.repository_owner` por tu usuario entre comillas, por ejemplo `'tu-usuario'`.
-- `vercel.json` desactiva los despliegues automáticos de Vercel por Git, por si algún día alguien conecta el repositorio desde Vercel.
-- Si quieres además aprobar cada despliegue a mano, en GitHub ve a **Settings → Environments → production** y añade una regla de revisión obligatoria (*Required reviewers*).
+- **Repositorio en una organización:** `github.repository_owner` será el nombre de la organización, no una persona. En `deploy.yml`, sustituir la condición por el usuario autorizado, por ejemplo `github.actor == 'usuario-autorizado'`.
+- **Varias personas pueden desplegar:** usar una lista, por ejemplo `contains(fromJSON('["usuario-1", "usuario-2"]'), github.actor)`.
+- **Aprobación manual de cada despliegue:** en **Settings → Environments → production**, añadir *Required reviewers*.

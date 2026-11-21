@@ -1,5 +1,5 @@
 /**
- * Recursos recomendados, agrupados por tema. Para añadir uno, copia un
+ * Recursos recomendados, agrupados por tema. Para añadir uno, se copia un
  * objeto { title, url, description } dentro del grupo que corresponda.
  * Cada enlace debe llevar a la fuente oficial de la herramienta.
  */

@@ -20,7 +20,7 @@ permissions:
 jobs:
   deploy:
     # Solo despliegan los commits que empuja el dueño del repositorio.
-    # Si el repo está en una organización, cambia github.repository_owner por tu usuario: 'tu-usuario'
+    # En un repositorio de organización, sustituir por el usuario autorizado (ver DEPLOY.md).
     if: github.actor == github.repository_owner
     runs-on: ubuntu-latest
     environment: production
