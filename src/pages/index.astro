@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/Hero.astro';
 import Community from '../components/home/Community.astro';
+import OfficialChannels from '../components/home/OfficialChannels.astro';
 import EntryCard from '../components/ui/EntryCard.astro';
 import { CATEGORY_COLORS, formatDate, getGuias, getNoticias } from '../utils/content';
 
@@ -38,6 +39,10 @@ const secciones = [
 
 <BaseLayout>
   <Hero />
+
+  <div class="section container community-wrap" id="canales">
+    <OfficialChannels />
+  </div>
 
   <div class="section container community-wrap">
     <Community />

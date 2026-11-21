@@ -1,6 +1,7 @@
 ---
 import Logo from '../brand/Logo.astro';
-import { community, nav, navCta, site } from '../../config/site';
+import Icon from '../ui/Icon.astro';
+import { community, nav, navCta, officialChannels, site } from '../../config/site';
 
 const year = new Date().getFullYear();
 ---
@@ -24,7 +25,7 @@ const year = new Date().getFullYear();
     </nav>
 
     <div>
-      <h2 class="footer-title">Comunidad</h2>
+      <h2 class="footer-title">Comunidad no oficial</h2>
       <ul>
         {
           community.map((c) => (
@@ -47,19 +48,31 @@ const year = new Date().getFullYear();
     </div>
   </div>
 
-  {
-    site.officialUrl && (
-      <div class="container">
-        <a class="official" href={site.officialUrl} target="_blank" rel="noopener">
-          <span class="official-label">Web oficial de la UNETI</span>
-          <span class="official-url">
-            {site.officialLabel} <span aria-hidden="true">↗</span>
-          </span>
-          <span class="sr-only">(se abre en una pestaña nueva)</span>
-        </a>
-      </div>
-    )
-  }
+  <div class="container">
+    <section class="official" aria-labelledby="footer-oficiales">
+      <h2 id="footer-oficiales" class="official-title">Canales oficiales</h2>
+      {
+        officialChannels.map((group) => (
+          <div class="official-row">
+            <span class="official-group">
+              {group.title} <span class="muted">· {group.kind}</span>
+            </span>
+            <ul>
+              {group.links.map((link) => (
+                <li>
+                  <a href={link.url} target="_blank" rel="noopener">
+                    <Icon name={link.icon} size={16} />
+                    {link.label === 'Web oficial' ? link.handle : link.label}
+                    <span class="sr-only">de {group.title} (se abre en una pestaña nueva)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </section>
+  </div>
 
   <div class="container bottom">
     <div class="brand-stripe" aria-hidden="true">
@@ -137,33 +150,48 @@ const year = new Date().getFullYear();
   }
 
   .official {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px 16px;
-    flex-wrap: wrap;
+    display: grid;
+    gap: 12px;
     margin-top: 36px;
-    padding: 16px 20px;
+    padding: 18px 20px;
     border-radius: var(--radius);
     border: 2px solid var(--brand-yellow);
     background: color-mix(in srgb, var(--brand-yellow) 14%, var(--surface));
-    color: var(--text);
-    text-decoration: none;
   }
 
-  .official:hover {
-    background: color-mix(in srgb, var(--brand-yellow) 26%, var(--surface));
+  .official-title {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0;
   }
 
-  .official-label {
+  .official-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+  }
+
+  .official-group {
     font-weight: 700;
+    min-width: 260px;
   }
 
-  .official-url {
-    font-weight: 700;
+  .official-row ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+  }
+
+  .official-row a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 650;
     color: var(--link);
-    text-decoration: underline;
-    text-underline-offset: 3px;
   }
 
   .bottom {

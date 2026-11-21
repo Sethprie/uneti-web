@@ -1,0 +1,177 @@
+---
+/** Canales oficiales: los de la universidad y los de la representación estudiantil. */
+import Icon from '../ui/Icon.astro';
+import { officialChannels } from '../../config/site';
+---
+
+<section class="official" aria-labelledby="canales-oficiales">
+  <div class="head">
+    <span class="eyebrow">Fuentes oficiales</span>
+    <h2 id="canales-oficiales">Canales oficiales</h2>
+    <p class="muted">
+      Para fechas, trámites y anuncios, la información válida es la que publican estos canales.
+    </p>
+  </div>
+
+  <div class="groups">
+    {
+      officialChannels.map((group) => (
+        <article class="group" style={`--c: ${group.color}`}>
+          <header>
+            <span class="badge">Oficial</span>
+            <p class="kind">{group.kind}</p>
+            <h3>{group.title}</h3>
+            <p class="desc">{group.description}</p>
+          </header>
+          <ul>
+            {group.links.map((link) => (
+              <li>
+                <a href={link.url} target="_blank" rel="noopener">
+                  <span class="ic">
+                    <Icon name={link.icon} />
+                  </span>
+                  <span class="text">
+                    <span class="label">{link.label}</span>
+                    <span class="handle">{link.handle}</span>
+                  </span>
+                  <span class="arrow" aria-hidden="true">
+                    ↗
+                  </span>
+                  <span class="sr-only">(se abre en una pestaña nueva)</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .head {
+    margin-bottom: 24px;
+  }
+
+  .head h2 {
+    margin-bottom: 8px;
+  }
+
+  .head p {
+    margin: 0;
+  }
+
+  .groups {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  }
+
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    border-top: 5px solid var(--c);
+    background: var(--surface);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--brand-yellow);
+    color: var(--brand-navy);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .badge::before {
+    content: '✓';
+  }
+
+  .kind {
+    margin: 10px 0 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  h3 {
+    font-size: 1.8rem;
+    margin: 2px 0 6px;
+  }
+
+  .desc {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.97rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: auto 0 0;
+    display: grid;
+    gap: 10px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--text);
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+
+  a:hover {
+    border-color: var(--c);
+  }
+
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--c);
+    color: #fff;
+    flex: none;
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .label {
+    font-weight: 650;
+  }
+
+  .handle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .arrow {
+    color: var(--text-muted);
+  }
+</style>

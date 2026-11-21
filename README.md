@@ -50,7 +50,8 @@ public/                   Archivos servidos tal cual: favicon y logo-uneti.svg
 | Qué | Dónde |
 | --- | --- |
 | Web oficial, repositorio y contacto | `site` en `src/config/site.ts` |
-| Enlaces de Discord y WhatsApp | `community` en `src/config/site.ts` (sin URL se muestran como "Próximamente") |
+| Canales oficiales (UNETI y representación estudiantil) | `officialChannels` en `src/config/site.ts` |
+| Comunidad independiente (WhatsApp y Discord) y su presentación | `community` y `communityAbout` en `src/config/site.ts` (sin URL se muestran como "Próximamente") |
 | Menú principal | `nav` en `src/config/site.ts` |
 | Categorías de guías y sus colores | `GUIDE_CATEGORIES` en `src/content.config.ts` y `CATEGORY_COLORS` en `src/utils/content.ts` |
 | Colores del tema | Variables de `src/styles/global.css`: `:root` para el modo claro y `[data-theme='dark']` para el oscuro |

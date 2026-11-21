@@ -4,6 +4,8 @@
  * Cada enlace debe llevar a la fuente oficial de la herramienta.
  */
 
+import { officialChannels } from '../config/site';
+
 export interface Recurso {
   title: string;
   url: string;
@@ -17,19 +19,20 @@ export interface GrupoRecursos {
   items: Recurso[];
 }
 
+/** Los canales oficiales salen de src/config/site.ts para no duplicar enlaces. */
+const oficiales: GrupoRecursos[] = officialChannels.map((group) => ({
+  title: `${group.title} · ${group.kind}`,
+  description: group.description,
+  color: group.color,
+  items: group.links.map((link) => ({
+    title: `${link.label} (${group.title})`,
+    url: link.url,
+    description: link.handle,
+  })),
+}));
+
 export const recursos: GrupoRecursos[] = [
-  {
-    title: 'Universidad',
-    description: 'Canales oficiales de la UNETI. Para fechas, requisitos y normativas, la fuente es siempre la web oficial.',
-    color: 'var(--brand-orange)',
-    items: [
-      {
-        title: 'Web oficial de la UNETI',
-        url: 'https://www.uneti.edu.ve/',
-        description: 'www.uneti.edu.ve: información institucional, carreras y anuncios oficiales.',
-      },
-    ],
-  },
+  ...oficiales,
   {
     title: 'Investigar y citar',
     description: 'Para buscar fuentes fiables y citarlas bien en tus trabajos.',

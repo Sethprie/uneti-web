@@ -18,32 +18,81 @@ export const site = {
   contact: '',
 };
 
+export type IconName = 'web' | 'instagram' | 'telegram' | 'whatsapp' | 'discord';
+
 /**
- * Canales de la comunidad. No son oficiales: los organizan y administran
- * estudiantes. Si `url` está vacío, se muestran como "Próximamente" y sin enlace.
+ * Canales oficiales, en dos grupos: los de la universidad y los de la
+ * representación estudiantil. Se muestran en el inicio, en Recursos y en el pie.
+ */
+export const officialChannels = [
+  {
+    id: 'uneti',
+    title: 'UNETI',
+    kind: 'Canales institucionales',
+    description: 'Información oficial de la universidad: anuncios, fechas y trámites.',
+    color: 'var(--brand-orange)',
+    links: [
+      { icon: 'web', label: 'Web oficial', handle: 'www.uneti.edu.ve', url: 'https://www.uneti.edu.ve/' },
+      { icon: 'instagram', label: 'Instagram', handle: '@unetivzla', url: 'https://www.instagram.com/unetivzla/' },
+      { icon: 'telegram', label: 'Telegram', handle: 'Canal de la UNETI', url: 'https://t.me/+MfCEPPeXrxA4NzMx' },
+    ],
+  },
+  {
+    id: 'meu',
+    title: 'MEU Código 200',
+    kind: 'Representación estudiantil',
+    description:
+      'Comunidad oficial de estudiantes, creada tras la asamblea estudiantil. Abierta a todos los estudiantes de la UNETI, sin importar el trayecto o el PNF.',
+    color: 'var(--brand-teal)',
+    links: [
+      {
+        icon: 'whatsapp',
+        label: 'Comunidad oficial de WhatsApp',
+        handle: 'Para todos los estudiantes',
+        url: 'https://chat.whatsapp.com/LRDAqoOEJiw2x86vnKTK2z',
+      },
+      { icon: 'instagram', label: 'Instagram', handle: '@meucodigo200', url: 'https://www.instagram.com/meucodigo200/' },
+    ],
+  },
+] as const satisfies readonly {
+  id: string;
+  title: string;
+  kind: string;
+  description: string;
+  color: string;
+  links: readonly { icon: IconName; label: string; handle: string; url: string }[];
+}[];
+
+/**
+ * Comunidad independiente de UNETI Estudiantil. No es oficial: la organizan y
+ * administran estudiantes. Si `url` está vacío, se muestra como "Próximamente".
  */
 export const community = [
   {
-    id: 'discord',
-    name: 'Servidor de Discord',
-    description: 'Canales por carrera y materia, dudas, apuntes y salas de estudio.',
-    cta: 'Entrar al Discord',
-    url: 'https://discord.gg/jfd25RE3Q2',
-    color: '#5865f2',
-  },
-  {
     id: 'whatsapp',
+    icon: 'whatsapp',
     name: 'Comunidad de WhatsApp',
-    description: 'Avisos y grupos por carrera, directo en tu teléfono.',
+    description:
+      'Nuestro espacio principal, ideal para avisos rápidos, recordatorios importantes y grupos divididos por secciones, con canales generales de las carreras para estar siempre al día.',
     cta: 'Unirme en WhatsApp',
     url: 'https://chat.whatsapp.com/HJ3j1rjGajX3ncninIkof9',
     color: '#1faa59',
   },
+  {
+    id: 'discord',
+    icon: 'discord',
+    name: 'Servidor de Discord',
+    description:
+      'Ideal para resolver dudas académicas, compartir apuntes, formar equipos de estudio y pasar el rato entre clases.',
+    cta: 'Entrar al Discord',
+    url: 'https://discord.gg/jfd25RE3Q2',
+    color: '#5865f2',
+  },
 ] as const;
 
-/** Aviso que acompaña a los canales de la comunidad. */
-export const communityNotice =
-  'Grupos no oficiales: los organizan, administran y moderan estudiantes, no la UNETI.';
+/** Texto que presenta la comunidad independiente. */
+export const communityAbout =
+  'Este es un espacio independiente creado por y para estudiantes de la UNETI. No somos un canal oficial de la universidad, sino una iniciativa estudiantil diseñada para conectar, socializar y apoyarnos mutuamente a lo largo de la carrera.';
 
 export const nav = [
   { href: '/', label: 'Inicio' },

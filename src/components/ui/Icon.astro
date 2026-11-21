@@ -1,0 +1,67 @@
+---
+/** Iconos de línea sencillos para enlaces a webs y redes. Heredan el color del texto. */
+import type { IconName } from '../../config/site';
+
+interface Props {
+  name: IconName;
+  size?: number;
+}
+
+const { name, size = 22 } = Astro.props;
+---
+
+<svg
+  class="icon"
+  viewBox="0 0 24 24"
+  width={size}
+  height={size}
+  aria-hidden="true"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  {
+    name === 'web' && (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z" />
+      </>
+    )
+  }
+  {
+    name === 'instagram' && (
+      <>
+        <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+      </>
+    )
+  }
+  {name === 'telegram' && <path d="M21 4 3 11.2l6.2 2.3L18 7.5l-7 7.3v5l3.4-3.6 4 3L21 4Z" />}
+  {
+    name === 'whatsapp' && (
+      <>
+        <path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.6 18.6Z" />
+        <path d="M9.3 8.6c.2 2.9 2.6 5.5 5.9 6.1l1.1-1.3-1.8-1-1 .7c-1-.4-2-1.4-2.4-2.4l.7-1-1-1.8Z" />
+      </>
+    )
+  }
+  {
+    name === 'discord' && (
+      <>
+        <path d="M7 7.5c3.3-1.4 6.7-1.4 10 0 1.6 2.4 2.4 5 2.3 8.1-1.4 1.1-2.8 1.8-4.3 2.2l-1-1.7M7 7.5C5.4 9.9 4.6 12.5 4.7 15.6 6.1 16.7 7.5 17.4 9 17.8l1-1.7M8.2 15.3c2.5 1.1 5.1 1.1 7.6 0" />
+        <circle cx="9.6" cy="12" r="1.2" fill="currentColor" stroke="none" />
+        <circle cx="14.4" cy="12" r="1.2" fill="currentColor" stroke="none" />
+      </>
+    )
+  }
+</svg>
+
+<style>
+  .icon {
+    flex: none;
+    display: block;
+  }
+</style>
