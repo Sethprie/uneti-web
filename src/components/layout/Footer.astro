@@ -39,8 +39,9 @@ const year = new Date().getFullYear();
             </li>
           ))
         }
+        <li class="footer-note">Grupos no oficiales, administrados por estudiantes.</li>
         <li><a href="/etiquetas">Todas las etiquetas</a></li>
-        {site.repoUrl && <li><a href={site.repoUrl} rel="noopener">Código del proyecto</a></li>}
+        {site.repoUrl && <li><a href={site.repoUrl} target="_blank" rel="noopener">Código en GitHub</a></li>}
         {site.contact && <li><a href={site.contact}>Contacto</a></li>}
       </ul>
     </div>
@@ -122,6 +123,12 @@ const year = new Date().getFullYear();
   ul a {
     color: var(--text);
     text-decoration: none;
+  }
+
+  .footer-note {
+    margin-bottom: 6px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
   }
 
   ul a:hover {

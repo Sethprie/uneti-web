@@ -12,15 +12,15 @@ export const site = {
   /** Web oficial de la universidad. Se destaca en la barra superior de todas las páginas. */
   officialUrl: 'https://www.uneti.edu.ve/',
   officialLabel: 'www.uneti.edu.ve',
-  /** Repositorio del proyecto, para la página "Participa". Vacío = no se muestra. */
-  repoUrl: '',
+  /** Repositorio del proyecto (pie y página "Participa"). Vacío = no se muestra. */
+  repoUrl: 'https://github.com/Sethprie/uneti-web',
   /** Correo o formulario de contacto del equipo. Vacío = no se muestra. */
   contact: '',
 };
 
 /**
- * Canales de la comunidad. Mientras `url` esté vacío, se muestran como
- * "Próximamente" y sin enlace. Pega aquí la invitación cuando la tengas.
+ * Canales de la comunidad. No son oficiales: los organizan y administran
+ * estudiantes. Si `url` está vacío, se muestran como "Próximamente" y sin enlace.
  */
 export const community = [
   {
@@ -28,18 +28,22 @@ export const community = [
     name: 'Servidor de Discord',
     description: 'Canales por carrera y materia, dudas, apuntes y salas de estudio.',
     cta: 'Entrar al Discord',
-    url: '', // TODO: invitación de Discord, ej. https://discord.gg/xxxxxxx
+    url: 'https://discord.gg/jfd25RE3Q2',
     color: '#5865f2',
   },
   {
     id: 'whatsapp',
     name: 'Comunidad de WhatsApp',
-    description: 'Avisos importantes y grupos por carrera, directo en tu teléfono.',
+    description: 'Avisos y grupos por carrera, directo en tu teléfono.',
     cta: 'Unirme en WhatsApp',
-    url: '', // TODO: enlace de la comunidad, ej. https://chat.whatsapp.com/xxxxxxx
+    url: 'https://chat.whatsapp.com/HJ3j1rjGajX3ncninIkof9',
     color: '#1faa59',
   },
 ] as const;
+
+/** Aviso que acompaña a los canales de la comunidad. */
+export const communityNotice =
+  'Grupos no oficiales: los organizan, administran y moderan estudiantes, no la UNETI.';
 
 export const nav = [
   { href: '/', label: 'Inicio' },
