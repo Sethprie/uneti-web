@@ -18,7 +18,16 @@ export const site = {
   contact: '',
 };
 
-export type IconName = 'web' | 'instagram' | 'telegram' | 'whatsapp' | 'discord';
+export type IconName =
+  | 'web'
+  | 'campus'
+  | 'help'
+  | 'instagram'
+  | 'telegram'
+  | 'youtube'
+  | 'facebook'
+  | 'whatsapp'
+  | 'discord';
 
 /**
  * Canales oficiales, en dos grupos: los de la universidad y los de la
@@ -33,8 +42,22 @@ export const officialChannels = [
     color: 'var(--brand-orange)',
     links: [
       { icon: 'web', label: 'Web oficial', handle: 'www.uneti.edu.ve', url: 'https://www.uneti.edu.ve/' },
+      {
+        icon: 'campus',
+        label: 'Campus virtual',
+        handle: 'Aulas y cursos de cada PNF',
+        url: 'https://www.uneti.edu.ve/campus/login/index.php',
+      },
+      {
+        icon: 'help',
+        label: 'Atención al Estudiante',
+        handle: 'Trámites y consultas por ticket',
+        url: 'https://ayuda.uneti.edu.ve/',
+      },
       { icon: 'instagram', label: 'Instagram', handle: '@unetivzla', url: 'https://www.instagram.com/unetivzla/' },
       { icon: 'telegram', label: 'Telegram', handle: 'Canal de la UNETI', url: 'https://t.me/+MfCEPPeXrxA4NzMx' },
+      { icon: 'youtube', label: 'YouTube', handle: 'UNETI Educativo', url: 'https://www.youtube.com/@UNETIEducativo' },
+      { icon: 'facebook', label: 'Facebook', handle: 'Uneti Vzla', url: 'https://www.facebook.com/Uneti.Vzla/' },
     ],
   },
   {
