@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Vercel CLI (vercel link)
 .vercel/
+
+.vercel
+.env*
