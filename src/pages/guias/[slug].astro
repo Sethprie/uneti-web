@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 }
 
 const { guia } = Astro.props as { guia: Guia };
-const { Content } = await render(guia);
+const { Content, headings } = await render(guia);
 const { data } = guia;
 ---
 
@@ -26,6 +26,7 @@ const { data } = guia;
   updated={data.updated}
   minutes={readingTime(guia.body)}
   tags={data.tags}
+  headings={headings}
   back={{ href: '/guias', label: 'Volver a las guías' }}
 >
   <Content />

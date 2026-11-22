@@ -3,6 +3,8 @@
 import BaseLayout from './BaseLayout.astro';
 import Breadcrumbs from '../components/ui/Breadcrumbs.astro';
 import TagList from '../components/ui/TagList.astro';
+import TableOfContents from '../components/ui/TableOfContents.astro';
+import type { MarkdownHeading } from 'astro';
 import { formatDate } from '../utils/content';
 
 interface Props {
@@ -16,9 +18,12 @@ interface Props {
   minutes: number;
   tags: string[];
   back: { href: string; label: string };
+  /** Títulos del texto. Con cuatro o más secciones se muestra un índice. */
+  headings?: MarkdownHeading[];
 }
 
-const { title, description, crumbs, kicker, author, date, updated, minutes, tags, back } = Astro.props;
+const { title, description, crumbs, kicker, author, date, updated, minutes, tags, back, headings = [] } = Astro.props;
+const showToc = headings.filter((h) => h.depth === 2).length >= 4;
 ---
 
 <BaseLayout
@@ -51,6 +56,7 @@ const { title, description, crumbs, kicker, author, date, updated, minutes, tags
     </header>
 
     <div class="container narrow body">
+      {showToc && <TableOfContents headings={headings} />}
       <div class="prose">
         <slot />
       </div>

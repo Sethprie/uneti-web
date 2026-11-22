@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 }
 
 const { noticia } = Astro.props as { noticia: Noticia };
-const { Content } = await render(noticia);
+const { Content, headings } = await render(noticia);
 const { data } = noticia;
 ---
 
@@ -23,6 +23,7 @@ const { data } = noticia;
   updated={data.updated}
   minutes={readingTime(noticia.body)}
   tags={data.tags}
+  headings={headings}
   back={{ href: '/noticias', label: 'Volver a las noticias' }}
 >
   <Content />
