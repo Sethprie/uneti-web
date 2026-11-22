@@ -1,5 +1,5 @@
 ---
-title: Git y GitHub desde cero
+title: Introducción a Git y GitHub
 description: Qué son Git y GitHub y cómo hacer tu primera contribución a esta web desde Visual Studio Code, paso a paso y con imágenes.
 category: Primeros pasos
 order: 20
