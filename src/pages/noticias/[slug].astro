@@ -19,6 +19,7 @@ const { data } = noticia;
   crumbs={[{ label: 'Noticias', href: '/noticias' }, { label: data.title }]}
   kicker="Noticia"
   author={data.author}
+  authorUrl={data.authorUrl}
   date={data.date}
   updated={data.updated}
   minutes={readingTime(noticia.body)}

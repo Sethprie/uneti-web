@@ -23,6 +23,8 @@ const noticias = defineCollection({
     date: z.coerce.date(),
     updated: z.coerce.date().optional(),
     author: z.string().default('Equipo UNETI Estudiantil'),
+    /** Web o perfil de quien escribe. Opcional. */
+    authorUrl: z.url().optional(),
     tags: z.array(z.string()).default([]),
     /** Las entradas con draft: true no se publican. */
     draft: z.boolean().default(false),
@@ -39,6 +41,8 @@ const guias = defineCollection({
     order: z.number().default(100),
     updated: z.coerce.date(),
     author: z.string().default('Equipo UNETI Estudiantil'),
+    /** Web o perfil de quien escribe. Opcional. */
+    authorUrl: z.url().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),

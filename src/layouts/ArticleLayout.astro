@@ -13,6 +13,7 @@ interface Props {
   crumbs: { label: string; href?: string }[];
   kicker?: string;
   author: string;
+  authorUrl?: string;
   date?: Date;
   updated?: Date;
   minutes: number;
@@ -22,7 +23,7 @@ interface Props {
   headings?: MarkdownHeading[];
 }
 
-const { title, description, crumbs, kicker, author, date, updated, minutes, tags, back, headings = [] } = Astro.props;
+const { title, description, crumbs, kicker, author, authorUrl, date, updated, minutes, tags, back, headings = [] } = Astro.props;
 const showToc = headings.filter((h) => h.depth === 2).length >= 4;
 ---
 
@@ -30,7 +31,7 @@ const showToc = headings.filter((h) => h.depth === 2).length >= 4;
   title={title}
   description={description}
   type="article"
-  article={{ published: date, modified: updated, author, section: kicker, tags }}
+  article={{ published: date, modified: updated, author, authorUrl, section: kicker, tags }}
   breadcrumbs={crumbs}
 >
   <article class="article">
@@ -41,7 +42,7 @@ const showToc = headings.filter((h) => h.depth === 2).length >= 4;
         <h1>{title}</h1>
         <p class="lead">{description}</p>
         <p class="meta">
-          <span>Por {author}</span>
+          <span>Por {authorUrl ? <a href={authorUrl} target="_blank" rel="noopener author">{author}</a> : author}</span>
           {date && <span>Publicado el <time datetime={date.toISOString()}>{formatDate(date)}</time></span>}
           {
             updated && (

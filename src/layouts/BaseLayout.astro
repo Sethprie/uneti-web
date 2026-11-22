@@ -17,6 +17,7 @@ interface Props {
     published?: Date;
     modified?: Date;
     author: string;
+    authorUrl?: string;
     section?: string;
     tags: string[];
   };
@@ -70,7 +71,7 @@ if (article) {
     inLanguage: site.locale,
     datePublished: (article.published ?? article.modified)?.toISOString(),
     dateModified: (article.modified ?? article.published)?.toISOString(),
-    author: { '@type': 'Person', name: article.author },
+    author: { '@type': 'Person', name: article.author, url: article.authorUrl },
     publisher: { '@id': `${home}#organization` },
     mainEntityOfPage: canonical,
     keywords: article.tags.join(', ') || undefined,
