@@ -55,7 +55,15 @@ Y al revés: `git pull` trae a tu carpeta lo que otras personas hayan subido.
 
 ## Lo que necesitas
 
-### 1. Git
+### 1. Visual Studio Code
+
+Entra en [code.visualstudio.com/download](https://code.visualstudio.com/download), descarga la versión para tu sistema e instálala con las opciones por defecto.
+
+![Página de descarga de Visual Studio Code con el botón de Windows resaltado](../../assets/guias/git/descarga-vscode.png)
+
+*Es gratuito. No lo confundas con «Visual Studio», que es otro programa.*
+
+### 2. Git
 
 Entra en [git-scm.com/install/windows](https://git-scm.com/install/windows) y pulsa **Click here to download**.
 
@@ -65,7 +73,7 @@ Entra en [git-scm.com/install/windows](https://git-scm.com/install/windows) y pu
 
 Abre el instalador. Casi todas las pantallas se dejan como vienen: pulsa **Next**. Fíjate en dos:
 
-- **Choosing the default editor:** elige **Use Visual Studio Code as Git's default editor**.
+- **Choosing the default editor:** elige **Use Visual Studio Code as Git's default editor**. Por eso instalamos VS Code primero.
 - **Choose a credential helper:** deja marcado **Git Credential Manager**. Es lo que guarda tu sesión de GitHub.
 
 ![Instalador de Git en la pantalla «Choose a credential helper», con Git Credential Manager marcado](../../assets/guias/git/instalador-git.png)
@@ -73,14 +81,6 @@ Abre el instalador. Casi todas las pantallas se dejan como vienen: pulsa **Next*
 *Captura: proyecto [Git Credential Manager](https://github.com/git-ecosystem/git-credential-manager), licencia MIT.*
 
 > **macOS y Linux:** en macOS, abre la Terminal y escribe `git --version`; si no está instalado, el sistema te ofrecerá instalarlo. En Linux, usa el gestor de paquetes, por ejemplo `sudo apt install git`.
-
-### 2. Visual Studio Code
-
-Entra en [code.visualstudio.com/download](https://code.visualstudio.com/download), descarga la versión para tu sistema e instálala con las opciones por defecto.
-
-![Página de descarga de Visual Studio Code con el botón de Windows resaltado](../../assets/guias/git/descarga-vscode.png)
-
-*Es gratuito. No lo confundas con «Visual Studio», que es otro programa.*
 
 ### 3. Una cuenta de GitHub
 
@@ -90,13 +90,24 @@ Entra en [code.visualstudio.com/download](https://code.visualstudio.com/download
 
 *Correo (1), contraseña (2) y usuario (3); luego, **Create account** (4). El registro es gratuito.*
 
-2. Activa la **verificación en dos pasos** en **Settings → Password and authentication**. GitHub la exige para contribuir, y protege tu cuenta.
+2. Activa la **verificación en dos pasos** en **Settings → Password and authentication**. GitHub te la pedirá cuando empieces a subir código, y protege tu cuenta.
 
 ![Sección «Two-factor authentication» de los ajustes de GitHub, con la app de autenticación configurada](../../assets/guias/git/verificacion-dos-pasos.png)
 
-*Elige «Authenticator app» y usa una app como Google Authenticator o Authy. Cuando está activa, aparece «Enabled».*
+*Si aún no la tienes, verás el botón **Enable two-factor authentication**. Elige «Authenticator app» y usa una app como Google Authenticator o Authy. Así se ve cuando ya está activa.*
 
 ## Conoce VS Code
+
+> **VS Code en español.** La primera vez que lo abras, VS Code puede ofrecerte instalar el paquete de idioma español. Te recomendamos dejarlo en inglés: las capturas de esta guía y casi toda la documentación están en inglés. Si ya lo tienes en español, estos son los nombres que verás:
+>
+> | En inglés | En español |
+> | --- | --- |
+> | Source Control | Control de código fuente |
+> | Changes / Staged Changes | Cambios / Cambios almacenados provisionalmente |
+> | Commit | Confirmar |
+> | Publish Branch / Sync Changes | Publicar rama / Sincronizar cambios |
+> | Create new branch... | Crear nueva rama... |
+> | Clone Git Repository... | Clonar repositorio Git... |
 
 Solo vas a usar cuatro partes de la ventana:
 
@@ -180,7 +191,7 @@ Un **pull request** (PR) es la propuesta que haces para que tus cambios entren e
 
 ## Práctica: tu primera contribución
 
-Vas a proponer un cambio pequeño a una guía de esta web: corregir una errata o añadir un dato útil. Todo desde VS Code.
+Vas a proponer un cambio pequeño a una guía de esta web. En el ejemplo, añadimos un consejo al final de la guía del campus virtual; tú puedes corregir una errata o añadir un dato útil en la guía que prefieras. Todo desde VS Code.
 
 ### 1. Clona el repositorio
 
@@ -220,7 +231,7 @@ Escribe un nombre corto, en minúsculas y con guiones, y pulsa `Enter`:
 
 ![Cuadro de VS Code con el nombre de la rama mi-primer-cambio escrito](../../assets/guias/git/vsc-rama-nombre.png)
 
-*Un buen nombre dice qué vas a hacer: `corrige-enlace-campus`.*
+*Para tus próximos cambios, usa nombres que digan qué haces, como `corrige-enlace-campus`.*
 
 La barra inferior ahora muestra tu rama. Todo lo que hagas desde aquí queda en ella.
 
@@ -234,7 +245,16 @@ En la terminal: `git switch -c mi-primer-cambio`
 
 ### 3. Haz tu cambio
 
-En el explorador, abre `src/content/guias/` y luego la guía que quieres mejorar. Haz tu cambio y guarda con `Ctrl+S`.
+En el explorador, abre `src/content/guias/` y luego la guía que quieres mejorar. Las guías están escritas en **Markdown**, un formato de texto sencillo: `**negrita**`, `## Título`, `- lista` y `[texto](enlace)`.
+
+![VS Code con una guía abierta: el encabezado entre líneas --- señalado a la izquierda y la vista previa a la derecha](../../assets/guias/git/vsc-markdown.png)
+
+*Pulsa `Ctrl+K` y luego `V` para ver la vista previa al lado mientras escribes.*
+
+1. **El encabezado** (entre las dos líneas `---`) son los datos de la guía. No lo toques, salvo para poner la fecha de hoy en `updated`.
+2. **La vista previa** muestra cómo quedará el texto. Si algo se ve raro ahí, también se verá raro en la web.
+
+Haz tu cambio debajo del encabezado y guarda con `Ctrl+S`. Para crear una guía nueva, sigue las [instrucciones para contribuir](https://github.com/Sethprie/uneti-web/blob/master/CONTRIBUTING.md).
 
 Ve al panel de **Control de código fuente**. Tu archivo aparece en **Changes**, con una **M** de «modificado».
 
@@ -258,13 +278,13 @@ En la terminal, `git status` te dice lo mismo:
 
 ![Panel de control de código fuente con el mensaje del commit escrito y el botón Commit resaltado](../../assets/guias/git/vsc-commit.png)
 
-*Un buen mensaje dice qué cambia: «Corrige el enlace del campus».*
+*Un buen mensaje dice qué cambia, en pocas palabras: «Añade un consejo a la guía del campus».*
 
 En la terminal:
 
 ```sh
 git add src/content/guias/campus-virtual.md
-git commit -m "Corrige el enlace del campus"
+git commit -m "Añade un consejo a la guía del campus"
 ```
 
 ### 5. Publica tu rama
@@ -287,25 +307,27 @@ Como no tienes permiso para subir al proyecto original, VS Code te ofrece crear 
 
 *Solo pasa la primera vez. Las siguientes, tu rama va directa a tu fork.*
 
+En la terminal: `git push -u origin mi-primer-cambio`. Ojo: este comando **no crea el fork**. Úsalo solo cuando VS Code ya lo haya creado, o para subir cambios nuevos después.
+
 ### 6. Abre el pull request
 
 Cuando el fork está listo, VS Code te avisa. Pulsa **Create PR**.
 
 ![Aviso de VS Code: el fork tu-usuario/uneti-web se creó, con el botón Create PR resaltado](../../assets/guias/git/vsc-fork-creado.png)
 
-*Si cerraste el aviso, entra en tu fork en GitHub: verás un botón amarillo «Compare & pull request».*
+*Si cerraste el aviso, entra en tu fork en GitHub: verás una franja amarilla con el botón verde **Compare & pull request**.*
 
 Se abre GitHub en el navegador. Revisa el título, explica en la descripción qué cambiaste y por qué, y pulsa **Create pull request**.
 
-![Página de GitHub para abrir un pull request, con el título y el botón «Create pull request» resaltados](../../assets/guias/git/abrir-pull-request.png)
+![Página de GitHub para abrir un pull request desde tu fork hacia Sethprie/uneti-web, con el título y el botón «Create pull request» resaltados](../../assets/guias/git/abrir-pull-request.png)
 
-*El título se rellena con el mensaje de tu commit.*
+*Arriba se ve que propones los cambios de tu fork (`tu-usuario/uneti-web`) al original (`Sethprie/uneti-web`). El título se rellena con el mensaje de tu commit.*
 
 ## Después del pull request
 
-![Pull request abierto en GitHub, con la etiqueta verde «Open»](../../assets/guias/git/pull-request-abierto.png)
+![Pull request abierto en GitHub desde tu fork, con la etiqueta verde «Open» resaltada](../../assets/guias/git/pull-request-abierto.png)
 
-*Recibirás un aviso por correo cuando alguien comente.*
+*«Open» significa que espera revisión. Recibirás un aviso por correo cuando alguien comente.*
 
 - **Si te piden ajustes:** haz los cambios en la misma rama, commit y pulsa **Sync Changes** en el panel de Git. El pull request se actualiza solo.
 - **Cuando lo aceptan:** tu cambio llega a `master` y se publica en la web.
