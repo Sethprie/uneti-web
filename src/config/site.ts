@@ -16,6 +16,8 @@ export const site = {
   repoUrl: 'https://github.com/Sethprie/uneti-web',
   /** Correo o formulario de contacto del equipo. Vacío = no se muestra. */
   contact: '',
+  /** Código de verificación de Google Search Console (etiqueta HTML). Vacío = no se incluye. */
+  googleSiteVerification: 'MVTbEzznz45i0qct1NNtF1nt3UQ_aoiSovj9DzPbChg',
 };
 
 export type IconName =
