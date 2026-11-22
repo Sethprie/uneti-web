@@ -7,10 +7,10 @@
  * Uso: node scripts/guia-git/capturas.mjs
  * Variable opcional BROWSER con la ruta del navegador.
  *
- * Las capturas que requieren sesión iniciada en GitHub (verificacion-dos-pasos,
- * aviso-fork, editor-web, proponer-cambios, abrir-pull-request, aviso-compare y
- * pull-request-abierto) se tomaron a mano con un PR de prueba ya cerrado; este
- * script no las regenera.
+ * Las capturas de VS Code y las que requieren sesión en GitHub (vsc-*,
+ * verificacion-dos-pasos, abrir-pull-request, pull-request-abierto,
+ * registro-github) se tomaron a mano; este script no las regenera.
+ * instalador-git.png viene del proyecto Git Credential Manager (licencia MIT).
  */
 import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync, mkdtempSync } from 'node:fs';
@@ -140,8 +140,6 @@ async function capture({ file, url, prepare = '', marks = [], clip }) {
   console.log(`✓ ${join(OUT, file)}`);
 }
 
-const REPO = 'https://github.com/Sethprie/uneti-web';
-
 try {
   await capture({
     file: 'descarga-git.png',
@@ -151,32 +149,10 @@ try {
   });
 
   await capture({
-    file: 'repositorio.png',
-    url: REPO,
-    marks: [['a, button', 'Fork'], ['button', 'Code']],
-    clip: { x: 0, y: 0, width: 1280, height: 620 },
-  });
-
-  await capture({
-    file: 'boton-code.png',
-    url: REPO,
-    prepare: `__find('button', 'Code')?.click()`,
-    marks: [['input[value$=".git"]']],
-    clip: { x: 520, y: 140, width: 760, height: 460 },
-  });
-
-  await capture({
-    file: 'carpeta-guias.png',
-    url: `${REPO}/tree/master/src/content/guias`,
-    marks: [['a', 'campus-virtual.md']],
-    clip: { x: 0, y: 0, width: 1280, height: 620 },
-  });
-
-  await capture({
-    file: 'boton-editar.png',
-    url: `${REPO}/blob/master/src/content/guias/campus-virtual.md`,
-    marks: [['svg.octicon-pencil']],
-    clip: { x: 0, y: 120, width: 1280, height: 520 },
+    file: 'descarga-vscode.png',
+    url: 'https://code.visualstudio.com/download',
+    // El recuadro del botón Download se añadió después con sharp
+    clip: { x: 0, y: 0, width: 1280, height: 640 },
   });
 } finally {
   ws.close();

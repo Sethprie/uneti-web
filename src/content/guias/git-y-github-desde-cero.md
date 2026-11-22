@@ -1,16 +1,14 @@
 ---
 title: Git y GitHub desde cero
-description: Qué son Git y GitHub, cómo instalarlos y cómo hacer tu primera contribución a esta web, paso a paso y con imágenes.
+description: Qué son Git y GitHub y cómo hacer tu primera contribución a esta web desde Visual Studio Code, paso a paso y con imágenes.
 category: Primeros pasos
 order: 20
 updated: 2026-11-22
-tags: [git, github, programación, contribuir]
+tags: [git, github, vs code, contribuir]
 draft: true
 ---
 
-Al terminar esta guía sabrás qué son Git y GitHub, tendrás todo instalado y habrás propuesto tu primer cambio a esta misma web. No necesitas saber programar.
-
-> **Dos caminos.** Si solo quieres corregir un texto, la [ruta rápida](#ruta-rápida-desde-el-navegador) se hace desde el navegador, sin instalar nada. Si quieres aprender Git de verdad, sigue la guía completa.
+Al terminar esta guía sabrás qué son Git y GitHub, tendrás todo instalado y habrás propuesto tu primer cambio a esta misma web. Todo se hace desde **Visual Studio Code**, el editor que usa casi todo el mundo para programar. No necesitas saber programar ni haberlo usado antes.
 
 ## Qué es Git
 
@@ -46,43 +44,74 @@ Esta es la idea más importante de la guía. Un cambio pasa por cuatro lugares a
 
 ![Cuatro cajas: tu carpeta, preparados, historial y GitHub, unidas por los comandos git add, git commit y git push, y git pull de vuelta](../../assets/guias/git/flujo.svg)
 
-*Cada flecha es un comando. Los verás todos en la práctica.*
+*En VS Code cada flecha es un botón. Debajo de cada paso verás también el comando equivalente.*
 
 1. **Tu carpeta:** editas los archivos como siempre.
-2. **Preparados:** con `git add` eliges qué cambios entrarán en el próximo commit.
-3. **Historial:** con `git commit` guardas el punto, con su mensaje.
-4. **GitHub:** con `git push` subes tus commits a internet.
+2. **Preparados:** eliges qué cambios entrarán en el próximo commit (`git add`).
+3. **Historial:** guardas el punto, con su mensaje (`git commit`).
+4. **GitHub:** subes tus commits a internet (`git push`).
 
 Y al revés: `git pull` trae a tu carpeta lo que otras personas hayan subido.
 
-## Instalar Git
+## Lo que necesitas
 
-### Windows
+### 1. Git
 
-1. Entra en [git-scm.com/install/windows](https://git-scm.com/install/windows) y pulsa **Click here to download**.
+Entra en [git-scm.com/install/windows](https://git-scm.com/install/windows) y pulsa **Click here to download**.
 
 ![Página de descarga de Git con el enlace «Click here to download» resaltado](../../assets/guias/git/descarga-git.png)
 
 *La página detecta tu sistema y ofrece la versión adecuada.*
 
-2. Abre el instalador. Casi todas las pantallas se dejan como vienen: pulsa **Next**. Fíjate en dos:
-   - **Choosing the default editor:** cambia Vim por **Notepad** o por **Visual Studio Code**. Vim es un editor difícil para empezar.
-   - **Choose a credential helper:** deja marcado **Git Credential Manager**. Es lo que te permitirá iniciar sesión en GitHub desde el navegador cuando subas cambios.
+Abre el instalador. Casi todas las pantallas se dejan como vienen: pulsa **Next**. Fíjate en dos:
+
+- **Choosing the default editor:** elige **Use Visual Studio Code as Git's default editor**.
+- **Choose a credential helper:** deja marcado **Git Credential Manager**. Es lo que guarda tu sesión de GitHub.
 
 ![Instalador de Git en la pantalla «Choose a credential helper», con Git Credential Manager marcado](../../assets/guias/git/instalador-git.png)
 
 *Captura: proyecto [Git Credential Manager](https://github.com/git-ecosystem/git-credential-manager), licencia MIT.*
 
-3. Al terminar, busca **Git Bash** en el menú Inicio. Es la terminal donde escribirás los comandos.
+> **macOS y Linux:** en macOS, abre la Terminal y escribe `git --version`; si no está instalado, el sistema te ofrecerá instalarlo. En Linux, usa el gestor de paquetes, por ejemplo `sudo apt install git`.
 
-### macOS y Linux
+### 2. Visual Studio Code
 
-- **macOS:** abre la Terminal y escribe `git --version`. Si no está instalado, el sistema te ofrecerá instalarlo.
-- **Linux:** instálalo con el gestor de paquetes de tu distribución, por ejemplo `sudo apt install git`.
+Entra en [code.visualstudio.com/download](https://code.visualstudio.com/download), descarga la versión para tu sistema e instálala con las opciones por defecto.
 
-### Configurar tu nombre
+![Página de descarga de Visual Studio Code con el botón de Windows resaltado](../../assets/guias/git/descarga-vscode.png)
 
-Git pone tu nombre y correo en cada commit. Se configura una sola vez:
+*Es gratuito. No lo confundas con «Visual Studio», que es otro programa.*
+
+### 3. Una cuenta de GitHub
+
+1. Entra en [github.com/signup](https://github.com/signup) y regístrate. Elige un nombre de usuario que te sirva en el futuro: lo verán quienes revisen tu trabajo, incluidas empresas.
+
+![Formulario de registro de GitHub con los campos de correo, contraseña y usuario y el botón «Create account» resaltados](../../assets/guias/git/registro-github.png)
+
+*Correo (1), contraseña (2) y usuario (3); luego, **Create account** (4). El registro es gratuito.*
+
+2. Activa la **verificación en dos pasos** en **Settings → Password and authentication**. GitHub la exige para contribuir, y protege tu cuenta.
+
+![Sección «Two-factor authentication» de los ajustes de GitHub, con la app de autenticación configurada](../../assets/guias/git/verificacion-dos-pasos.png)
+
+*Elige «Authenticator app» y usa una app como Google Authenticator o Authy. Cuando está activa, aparece «Enabled».*
+
+## Conoce VS Code
+
+Solo vas a usar cuatro partes de la ventana:
+
+![Ventana de VS Code con cuatro zonas señaladas: el explorador, el control de código fuente, la terminal y la rama en la barra inferior](../../assets/guias/git/vsc-partes.png)
+
+*Las cuatro partes que usarás en esta guía.*
+
+1. **Explorador:** los archivos del proyecto. Haz clic en uno para abrirlo en el editor.
+2. **Control de código fuente** (*Source Control*): el panel de Git. Aquí ves tus cambios y haces los commits.
+3. **Terminal:** una consola dentro del editor para escribir comandos. Se abre en **View → Terminal**, o con `Ctrl+ñ` en teclado español (`` Ctrl+` `` en inglés).
+4. **Barra inferior:** muestra en qué rama estás. Haz clic ahí para cambiar de rama.
+
+### Configura tu nombre
+
+Git pone tu nombre y correo en cada commit. Abre la terminal de VS Code y escribe, una sola vez:
 
 ```sh
 git --version
@@ -90,32 +119,17 @@ git config --global user.name "Tu Nombre"
 git config --global user.email "tu-correo@ejemplo.com"
 ```
 
-![Terminal con git --version y los dos comandos de configuración](../../assets/guias/git/terminal-configurar.svg)
+![Terminal de VS Code con git --version y los dos comandos de configuración](../../assets/guias/git/terminal-configurar.svg)
 
-*Usa el mismo correo con el que crearás tu cuenta de GitHub.*
+*Usa el mismo correo de tu cuenta de GitHub.*
 
 > Git puede mostrarte sus mensajes en inglés o en español, según tu sistema. Las imágenes de esta guía están en inglés, que es lo más común.
-
-## Crear tu cuenta de GitHub
-
-1. Entra en [github.com/signup](https://github.com/signup) y regístrate con tu correo.
-2. Elige un nombre de usuario que te sirva en el futuro: lo verán quienes revisen tu trabajo, incluidas empresas.
-
-![Formulario de registro de GitHub con los campos de correo, contraseña y usuario y el botón «Create account» resaltados](../../assets/guias/git/registro-github.png)
-
-*Correo (1), contraseña (2) y usuario (3); luego, **Create account** (4). El registro es gratuito.*
-
-3. Activa la **verificación en dos pasos** en **Settings → Password and authentication**. GitHub la exige para contribuir, y protege tu cuenta.
-
-![Sección «Two-factor authentication» de los ajustes de GitHub, con la app de autenticación configurada](../../assets/guias/git/verificacion-dos-pasos.png)
-
-*Elige «Authenticator app» y usa una app como Google Authenticator o Authy. Cuando está activa, aparece «Enabled».*
 
 ## Los conceptos que vas a usar
 
 ### Repositorio
 
-Un **repositorio** (o *repo*) es un proyecto guardado con Git: sus archivos más todo su historial. Esta web es un repositorio.
+Un **repositorio** (o *repo*) es un proyecto guardado con Git: sus archivos más todo su historial. Esta web es un repositorio. **Clonar** es descargar un repositorio a tu computadora.
 
 ### Ramas
 
@@ -125,23 +139,13 @@ Una **rama** es una línea de trabajo aparte. Creas una rama para tu cambio, tra
 
 *En esta web la rama principal se llama `master`. En otros proyectos se llama `main`.*
 
-Los comandos de ramas que necesitas:
-
-```sh
-git branch                      # lista las ramas y marca en la que estás
-git switch -c nombre-de-rama    # crea una rama nueva y te cambia a ella
-git switch master               # vuelve a una rama que ya existe
-```
-
-> En tutoriales viejos verás `git checkout` en lugar de `git switch`. Hacen lo mismo; `switch` es la forma moderna y más clara.
-
 ### Fork
 
-No puedes escribir directamente en un proyecto ajeno. Por eso haces un **fork**: tu propia copia del repositorio en GitHub. Trabajas en tu copia y, al terminar, pides que tus cambios pasen al original.
+No puedes subir cambios directamente a un proyecto ajeno. Por eso se usa un **fork**: tu propia copia del repositorio en GitHub. Subes tus cambios a tu copia y desde ahí pides que pasen al original. VS Code crea el fork por ti la primera vez que publicas.
 
-![Diagrama: fork del proyecto original a tu copia, clone a tu computadora, push de vuelta a tu copia y pull request al original](../../assets/guias/git/fork.svg)
+![Diagrama: clonas el original a tu computadora, Publish Branch sube tus cambios a tu copia y el pull request los propone al original](../../assets/guias/git/fork.svg)
 
-*Los cuatro pasos de cualquier contribución en GitHub.*
+*Los tres pasos de cualquier contribución en GitHub.*
 
 ### Pull request
 
@@ -153,120 +157,126 @@ Un **pull request** (PR) es la propuesta que haces para que tus cambios entren e
 
 ## Práctica: tu primera contribución
 
-Vas a proponer un cambio a una guía de esta web. Elige algo pequeño: corregir una errata o añadir un dato útil.
+Vas a proponer un cambio pequeño a una guía de esta web: corregir una errata o añadir un dato útil. Todo desde VS Code.
 
-### Ruta rápida (desde el navegador)
+### 1. Clona el repositorio
 
-Sin instalar nada. Ideal para cambios de texto.
+Abre VS Code. En la pantalla de bienvenida, pulsa **Clone Git Repository...**
 
-1. Entra en la [carpeta de guías del repositorio](https://github.com/Sethprie/uneti-web/tree/master/src/content/guias) y abre la guía que quieres mejorar.
+![Pantalla de bienvenida de VS Code con «Clone Git Repository...» resaltado](../../assets/guias/git/vsc-bienvenida.png)
 
-![Carpeta de guías en GitHub con un archivo resaltado](../../assets/guias/git/carpeta-guias.png)
+*Si no ves la bienvenida: **File → New Window**.*
 
-*Cada archivo `.md` es una guía de la web.*
+Pega la dirección del repositorio y pulsa `Enter`:
 
-2. Pulsa el **lápiz** para editar.
+```text
+https://github.com/Sethprie/uneti-web.git
+```
 
-![Vista del archivo en GitHub con el botón del lápiz resaltado](../../assets/guias/git/boton-editar.png)
+![Cuadro de VS Code con la dirección del repositorio escrita](../../assets/guias/git/vsc-clonar.png)
 
-*Si no has iniciado sesión, GitHub te lo pedirá.*
+*Es la dirección del proyecto original, no hace falta crear nada antes.*
 
-3. GitHub te avisará de que necesitas un fork. Pulsa **Fork this repository**: lo crea por ti.
+Elige la carpeta donde guardarlo (por ejemplo, Documentos) y, cuando termine, pulsa **Open**.
 
-![Aviso de GitHub para crear un fork antes de editar](../../assets/guias/git/aviso-fork.png)
+![Aviso de VS Code preguntando si abrir el repositorio, con el botón Open resaltado](../../assets/guias/git/vsc-abrir-repo.png)
 
-*Solo pasa la primera vez.*
+*VS Code abre la carpeta del proyecto.*
 
-4. Haz tu cambio en el editor. En la pestaña **Preview** ves cómo queda.
+En la terminal: `git clone https://github.com/Sethprie/uneti-web.git`
 
-![Editor de GitHub con el archivo abierto](../../assets/guias/git/editor-web.png)
+### 2. Crea tu rama
 
-*El texto está en Markdown: `**negrita**`, `## Título`, `- lista`.*
+Haz clic en **master**, en la barra inferior. En el menú, elige **Create new branch...**
 
-5. Pulsa **Commit changes...**, escribe un mensaje que explique el cambio y pulsa **Propose changes**. Si ves la opción de elegir rama, marca **Create a new branch**: nunca escribas directo en `master`.
+![Menú de ramas de VS Code con «Create new branch...» resaltado](../../assets/guias/git/vsc-rama-menu.png)
 
-![Ventana para proponer los cambios con el mensaje escrito](../../assets/guias/git/proponer-cambios.png)
+*También muestra las ramas que ya existen, para cambiar entre ellas.*
+
+Escribe un nombre corto, en minúsculas y con guiones, y pulsa `Enter`:
+
+![Cuadro de VS Code con el nombre de la rama mi-primer-cambio escrito](../../assets/guias/git/vsc-rama-nombre.png)
+
+*Un buen nombre dice qué vas a hacer: `corrige-enlace-campus`.*
+
+La barra inferior ahora muestra tu rama. Todo lo que hagas desde aquí queda en ella.
+
+![Barra inferior de VS Code mostrando la rama mi-primer-cambio](../../assets/guias/git/vsc-rama-barra.png)
+
+*Para volver a la principal, haz clic aquí y elige `master`.*
+
+En la terminal: `git switch -c mi-primer-cambio`
+
+> En tutoriales viejos verás `git checkout -b` en lugar de `git switch -c`. Hacen lo mismo; `switch` es la forma moderna.
+
+### 3. Haz tu cambio
+
+En el explorador, abre `src/content/guias/` y luego la guía que quieres mejorar. Haz tu cambio y guarda con `Ctrl+S`.
+
+Ve al panel de **Control de código fuente**. Tu archivo aparece en **Changes**, con una **M** de «modificado».
+
+![Panel de control de código fuente con el archivo modificado y el botón + resaltado](../../assets/guias/git/vsc-cambios.png)
+
+*Al pasar el ratón por el archivo aparece el botón **+**.*
+
+Si haces clic en el archivo, VS Code te muestra el antes y el después, línea por línea.
+
+En la terminal, `git status` te dice lo mismo:
+
+![Salida de git status en la terminal de VS Code, con la rama, los cambios sin preparar y el archivo modificado señalados](../../assets/guias/git/terminal-status.svg)
+
+*`git status` es tu brújula: siempre te dice dónde estás y qué falta.*
+
+### 4. Prepara y haz el commit
+
+1. Pulsa el **+** junto al archivo. Pasa a **Staged Changes** (preparados).
+2. Escribe en el cuadro de arriba un mensaje que explique el cambio.
+3. Pulsa **Commit**.
+
+![Panel de control de código fuente con el mensaje del commit escrito y el botón Commit resaltado](../../assets/guias/git/vsc-commit.png)
 
 *Un buen mensaje dice qué cambia: «Corrige el enlace del campus».*
 
-6. En la página siguiente, revisa el título y pulsa **Create pull request**.
-
-![Página para crear el pull request](../../assets/guias/git/abrir-pull-request.png)
-
-*En la descripción puedes explicar por qué propones el cambio.*
-
-Listo: tu propuesta queda abierta para revisión. Salta a [Después del pull request](#después-del-pull-request).
-
-### Ruta completa (con Git)
-
-**1. Haz un fork.** En el [repositorio](https://github.com/Sethprie/uneti-web), pulsa **Fork** (1) y confirma con **Create fork**.
-
-![Página del repositorio con los botones Fork y Code resaltados](../../assets/guias/git/repositorio.png)
-
-*El botón **Code** (2) lo usarás en el paso siguiente, ya en tu copia.*
-
-**2. Copia la dirección de tu fork.** En tu copia (`github.com/tu-usuario/uneti-web`), pulsa **Code** y copia la dirección HTTPS.
-
-![Menú del botón Code con la dirección para clonar resaltada](../../assets/guias/git/boton-code.png)
-
-*Asegúrate de que la dirección tenga tu usuario, no `Sethprie`.*
-
-**3. Clona y crea tu rama.** Abre Git Bash y escribe, con tu usuario:
-
-```sh
-git clone https://github.com/tu-usuario/uneti-web.git
-cd uneti-web
-git switch -c mi-primer-cambio
-```
-
-![Terminal clonando el repositorio, entrando en la carpeta y creando una rama](../../assets/guias/git/terminal-clonar.svg)
-
-*Entre paréntesis, la terminal te recuerda en qué rama estás.*
-
-**4. Haz tu cambio.** Abre el archivo con tu editor, cámbialo y guárdalo.
-
-![Visual Studio Code con la guía abierta: la pestaña muestra un punto porque hay cambios sin guardar, y las líneas nuevas tienen una barra verde a la izquierda](../../assets/guias/git/editor-local.png)
-
-*El punto en la pestaña (1) indica que no has guardado. La barra verde junto a las líneas (2) marca lo que es nuevo respecto al último commit.*
-
-**5. Revisa qué cambió** con `git status`. Es el comando que más usarás: siempre te dice dónde estás y qué falta.
-
-![Salida de git status con la rama, los cambios sin preparar y el archivo modificado señalados](../../assets/guias/git/terminal-status.svg)
-
-*En rojo, lo que cambiaste y aún no está preparado.*
-
-**6. Prepara y guarda el commit:**
+En la terminal:
 
 ```sh
 git add src/content/guias/campus-virtual.md
-git commit -m "Añade horario de la biblioteca a la guía del campus"
+git commit -m "Corrige el enlace del campus"
 ```
 
-![Terminal con git add, git commit y un git status limpio](../../assets/guias/git/terminal-commit.svg)
+### 5. Publica tu rama
 
-*«working tree clean» significa que todo está guardado en el historial.*
+Pulsa **Publish Branch**.
 
-**7. Sube tu rama** a tu fork:
+![Panel de control de código fuente con el botón Publish Branch resaltado](../../assets/guias/git/vsc-publicar.png)
 
-```sh
-git push -u origin mi-primer-cambio
-```
+*Solo la primera vez se llama así; luego el botón sube los cambios nuevos.*
 
-La primera vez, Git abrirá una ventana para que inicies sesión en GitHub desde el navegador. Solo pasa una vez.
+La primera vez, VS Code te pide iniciar sesión en GitHub. Pulsa **Allow**, autoriza en el navegador que se abre y vuelve a VS Code.
 
-![Ventana «Connect to GitHub» con el botón «Sign in with your browser» resaltado](../../assets/guias/git/inicio-sesion-push.png)
+![Aviso de VS Code pidiendo permiso para iniciar sesión con GitHub, con el botón Allow resaltado](../../assets/guias/git/vsc-permitir-login.png)
 
-*Pulsa «Sign in with your browser» y autoriza el acceso.*
+*Comprueba en el navegador que estás en tu cuenta antes de autorizar.*
 
-![Salida de git push con el enlace para crear el pull request señalado](../../assets/guias/git/terminal-push.svg)
+Como no tienes permiso para subir al proyecto original, VS Code te ofrece crear tu fork. Pulsa **Create Fork**.
 
-*Git te da el enlace directo para abrir el pull request.*
+![Aviso de VS Code: no tienes permiso para subir a Sethprie/uneti-web, ¿crear un fork? Con el botón Create Fork resaltado](../../assets/guias/git/vsc-crear-fork.png)
 
-**8. Abre el pull request.** Entra en tu fork en GitHub: verás un aviso con el botón **Compare & pull request**. Púlsalo, revisa el título y pulsa **Create pull request**.
+*Solo pasa la primera vez. Las siguientes, tu rama va directa a tu fork.*
 
-![Aviso amarillo en GitHub con el botón Compare & pull request](../../assets/guias/git/aviso-compare.png)
+### 6. Abre el pull request
 
-*También puedes usar el enlace que te dio `git push`.*
+Cuando el fork está listo, VS Code te avisa. Pulsa **Create PR**.
+
+![Aviso de VS Code: el fork tu-usuario/uneti-web se creó, con el botón Create PR resaltado](../../assets/guias/git/vsc-fork-creado.png)
+
+*Si cerraste el aviso, entra en tu fork en GitHub: verás un botón amarillo «Compare & pull request».*
+
+Se abre GitHub en el navegador. Revisa el título, explica en la descripción qué cambiaste y por qué, y pulsa **Create pull request**.
+
+![Página de GitHub para abrir un pull request, con el título y el botón «Create pull request» resaltados](../../assets/guias/git/abrir-pull-request.png)
+
+*El título se rellena con el mensaje de tu commit.*
 
 ## Después del pull request
 
@@ -274,29 +284,34 @@ La primera vez, Git abrirá una ventana para que inicies sesión en GitHub desde
 
 *Recibirás un aviso por correo cuando alguien comente.*
 
-- Si te piden ajustes, haz los cambios **en la misma rama**, `commit` y `push` otra vez. El pull request se actualiza solo.
-- Cuando lo aceptan, tu cambio llega a `master` y se publica en la web.
-- Para tu siguiente contribución, actualiza tu copia antes de empezar: en tu fork en GitHub, pulsa **Sync fork**; luego, en tu carpeta, `git switch master` y `git pull`.
+- **Si te piden ajustes:** haz los cambios en la misma rama, commit y pulsa **Sync Changes** en el panel de Git. El pull request se actualiza solo.
+- **Cuando lo aceptan:** tu cambio llega a `master` y se publica en la web.
+- **Para tu siguiente contribución:** cambia a `master` en la barra inferior y trae lo último del proyecto original con `git pull upstream master` en la terminal. Luego crea una rama nueva.
+
+> VS Code llama `origin` a tu fork y `upstream` al proyecto original. Por eso para traer lo nuevo del original se usa `upstream`.
 
 ## Si algo sale mal
 
-- **No sabes dónde estás:** escribe `git status`. Te dice la rama, qué cambió y, muchas veces, qué comando usar.
-- **`fatal: not a git repository`:** no estás dentro de la carpeta del proyecto. Entra con `cd uneti-web`.
-- **`Permission denied` al hacer push:** estás intentando subir al original en vez de a tu fork. Revisa que clonaste la dirección con tu usuario.
-- **Hiciste cambios en `master` sin querer:** crea la rama ahora con `git switch -c nombre`. Tus cambios se van contigo a la rama nueva.
+- **No sabes dónde estás:** escribe `git status` en la terminal. Te dice la rama, qué cambió y, muchas veces, qué hacer.
+- **El panel de Git no muestra tus cambios:** comprueba que guardaste el archivo (`Ctrl+S`) y que abriste la carpeta del proyecto, no un archivo suelto.
+- **Hiciste cambios en `master` sin querer:** crea la rama ahora desde la barra inferior. Tus cambios se van contigo a la rama nueva.
+- **Iniciaste sesión con otra cuenta:** en VS Code, haz clic en el icono de cuentas (abajo a la izquierda), cierra la sesión de GitHub y vuelve a publicar.
+
+> **Para una errata rápida** también puedes editar el archivo directamente en GitHub con el botón del lápiz, sin instalar nada.
 
 ## Qué no cubre esta guía
 
 Lo que viste es suficiente para contribuir. Cuando quieras avanzar, estos son los siguientes temas:
 
-- **Conflictos:** cuando dos personas cambian la misma línea y Git no sabe con cuál quedarse.
+- **Conflictos:** cuando dos personas cambian la misma línea y Git no sabe con cuál quedarse. VS Code te ayuda a resolverlos.
 - **`git stash`:** guardar cambios a medias sin hacer commit.
 - **`git rebase`:** reordenar o limpiar el historial de una rama.
-- **Llaves SSH:** otra forma de conectarte a GitHub, sin iniciar sesión.
+- **Ver la web en tu computadora:** con Node.js y pnpm, siguiendo el [README del proyecto](https://github.com/Sethprie/uneti-web#readme).
 - **GitHub Actions:** tareas automáticas. Esta web las usa para publicarse.
 
 ### Para seguir aprendiendo
 
+- **[Git en VS Code](https://code.visualstudio.com/docs/sourcecontrol/overview):** la documentación oficial del panel de Git.
 - **[Pro Git](https://git-scm.com/book/es/v2):** el libro oficial de Git, gratuito y en español.
 - **[Learn Git Branching](https://learngitbranching.js.org/?locale=es_ES):** ejercicios interactivos para entender las ramas, en español.
 - **[GitHub Skills](https://skills.github.com/):** cursos prácticos dentro del propio GitHub.

@@ -1,8 +1,7 @@
 /**
  * Genera los SVG de la guía de Git y GitHub en src/assets/guias/git/:
  * - Diagramas de conceptos (historial, flujo, ramas, fork...).
- * - Ventanas de terminal con la salida real de los comandos.
- * - Recuadros "captura pendiente" para las capturas que faltan.
+ * - La terminal integrada de VS Code con la salida real de los comandos.
  *
  * Uso: node scripts/guia-git/diagramas.mjs
  * Los diagramas llevan su propio fondo claro para leerse igual en modo oscuro.
@@ -171,7 +170,7 @@ const commit = (x, y, color = C.orange, r = 13) =>
 {
   const W = 940, H = 440;
   let b = text(40, 52, 'Cómo se contribuye a un proyecto ajeno', { size: 22, weight: 700 });
-  b += text(40, 80, 'No puedes escribir directo en el proyecto original, así que trabajas en tu copia (fork).', { size: 15, color: C.muted });
+  b += text(40, 80, 'No puedes subir cambios al proyecto original: van a tu copia (fork) y desde ahí los propones.', { size: 15, color: C.muted });
   // original
   b += box(40, 120, 340, 110, { stroke: C.navy, sw: 3 });
   b += text(210, 158, 'Proyecto original', { size: 17, weight: 700, anchor: 'middle' });
@@ -181,23 +180,20 @@ const commit = (x, y, color = C.orange, r = 13) =>
   b += box(560, 120, 340, 110, { stroke: C.orange, sw: 3 });
   b += text(730, 158, 'Tu copia (fork)', { size: 17, weight: 700, anchor: 'middle' });
   b += text(730, 190, 'tu-usuario/uneti-web', { size: 15, color: C.tealDark, anchor: 'middle', family: MONO, weight: 600 });
-  b += text(730, 214, 'en GitHub', { size: 14, color: C.muted, anchor: 'middle' });
+  b += text(730, 214, 'VS Code la crea por ti', { size: 14, color: C.muted, anchor: 'middle' });
   // computer
-  b += box(560, 320, 340, 90, { stroke: C.navy });
-  b += text(730, 358, 'Tu computadora', { size: 17, weight: 700, anchor: 'middle' });
-  b += text(730, 386, 'donde editas y haces commits', { size: 14, color: C.muted, anchor: 'middle' });
+  b += box(40, 320, 340, 90, { stroke: C.navy });
+  b += text(210, 358, 'Tu computadora (VS Code)', { size: 17, weight: 700, anchor: 'middle' });
+  b += text(210, 386, 'donde editas y haces commits', { size: 14, color: C.muted, anchor: 'middle' });
 
-  b += arrow(390, 150, 548, 150);
-  b += pill(470, 136, '1. Fork', { fill: C.navy, family: SANS, size: 13 });
-  b += arrow(690, 240, 690, 310);
-  b += text(680, 282, '2. git clone', { size: 14, anchor: 'end', family: MONO, weight: 600 });
-  b += arrow(770, 310, 770, 240, { color: C.orange, marker: 'arrow-o' });
-  b += text(780, 282, '3. git push', { size: 14, color: C.orange, family: MONO, weight: 600 });
-  b += arrow(548, 205, 390, 205, { color: C.tealDark, marker: 'arrow-t' });
-  b += pill(470, 232, '4. Pull request', { fill: C.tealDark, family: SANS, size: 13 });
-  b += text(210, 300, 'Quien mantiene el proyecto', { size: 14, color: C.muted, anchor: 'middle' });
-  b += text(210, 322, 'revisa tu propuesta y, si está', { size: 14, color: C.muted, anchor: 'middle' });
-  b += text(210, 344, 'bien, la une al original.', { size: 14, color: C.muted, anchor: 'middle' });
+  b += arrow(210, 240, 210, 310);
+  b += text(200, 282, '1. Clonar', { size: 14, anchor: 'end', weight: 700 });
+  b += `<path d="M390,365 H730 V244" fill="none" stroke="${C.orange}" stroke-width="3" marker-end="url(#arrow-o)"/>`;
+  b += pill(560, 365, '2. Publish Branch', { fill: C.orange, family: SANS, size: 13 });
+  b += arrow(548, 175, 392, 175, { color: C.tealDark, marker: 'arrow-t' });
+  b += pill(470, 150, '3. Pull request', { fill: C.tealDark, family: SANS, size: 13 });
+  b += text(470, 210, 'quien mantiene el proyecto', { size: 13, color: C.muted, anchor: 'middle' });
+  b += text(470, 228, 'lo revisa y lo une', { size: 13, color: C.muted, anchor: 'middle' });
   save('fork.svg', W, H, b);
 }
 
@@ -220,46 +216,46 @@ const commit = (x, y, color = C.orange, r = 13) =>
   save('pull-vs-pull-request.svg', W, H, b);
 }
 
-/* ---------- Terminales ---------- */
+/* ---------- Terminal integrada de VS Code ---------- */
 
 /**
- * Ventana de Git Bash. Cada línea es un string (salida) o un objeto:
- * { cmd, dir, branch } para un comando con su prompt de dos líneas,
+ * Panel "Terminal" de VS Code con PowerShell. Cada línea es un string
+ * (salida) o un objeto: { cmd } para un comando con su prompt,
  * { t, color } para salida coloreada, y `note` (número) para marcarla.
  */
-function terminal(name, title, lines, notes = []) {
+function terminal(name, lines, notes = []) {
   const size = 15, lh = 22, cw = size * 0.6;
-  const rows = [];
-  for (const l of lines) {
-    if (typeof l === 'object' && l.cmd !== undefined) {
-      rows.push({ prompt: l });
-      rows.push({ cmd: l.cmd, note: l.note });
-    } else rows.push(typeof l === 'string' ? { t: l } : l);
+  const B = String.fromCharCode(92);
+  const prompt = `PS C:${B}Users${B}ana${B}Documents${B}uneti-web> `;
+  const rows = lines.map((l) => (typeof l === 'string' ? { t: l } : l));
+  const W = 1100;
+  const H = 52 + rows.length * lh + 20;
+  let b = `<rect x="0" y="0" width="${W}" height="${H}" rx="10" fill="#181818" stroke="#2b2b2b" stroke-width="2"/>`;
+  const tabs = ['PROBLEMS', 'OUTPUT', 'DEBUG CONSOLE', 'TERMINAL', 'PORTS'];
+  let tx = 18;
+  for (const t of tabs) {
+    const active = t === 'TERMINAL';
+    b += text(tx, 25, t, { size: 11, weight: active ? 700 : 400, color: active ? '#e7e7e7' : '#9d9d9d' });
+    if (active) b += `<rect x="${tx}" y="31" width="${t.length * 7.3}" height="2" fill="#0078d4"/>`;
+    tx += t.length * 7.3 + 26;
   }
-  const W = 980;
-  const H = 54 + rows.length * lh + 24;
-  let b = `<rect x="0" y="0" width="${W}" height="${H}" rx="12" fill="#0c0c0c"/>`;
-  b += `<rect x="0" y="0" width="${W}" height="36" rx="12" fill="#2b2b2b"/><rect x="0" y="24" width="${W}" height="12" fill="#2b2b2b"/>`;
-  b += text(16, 23, title, { size: 13, color: '#d0d0d0' });
-  b += text(W - 100, 24, '—', { size: 14, color: '#bbb' }) + text(W - 66, 24, '☐', { size: 14, color: '#bbb' }) + text(W - 32, 24, '✕', { size: 14, color: '#bbb' });
+  b += text(W - 120, 25, 'powershell', { size: 12, color: '#cccccc' });
   rows.forEach((r, i) => {
-    const y = 60 + i * lh;
-    if (r.prompt) {
-      const p = r.prompt;
-      b += `<text x="18" y="${y}" font-size="${size}" font-family="${MONO}"><tspan fill="#16c60c">ana@PC-ANA</tspan> <tspan fill="#b148c6">MINGW64</tspan> <tspan fill="#f9f1a5">${esc(p.dir ?? '~')}</tspan>${p.branch ? ` <tspan fill="#61d6d6">(${esc(p.branch)})</tspan>` : ''}</text>`;
-    } else if (r.cmd !== undefined) {
-      b += `<text x="18" y="${y}" font-size="${size}" font-family="${MONO}" fill="#f2f2f2" xml:space="preserve">$ ${esc(r.cmd)}</text>`;
+    const y = 66 + i * lh;
+    const shown = r.cmd !== undefined ? prompt + r.cmd : r.t;
+    if (r.cmd !== undefined) {
+      b += `<text x="18" y="${y}" font-size="${size}" font-family="${MONO}" xml:space="preserve"><tspan fill="#cccccc">${esc(prompt)}</tspan><tspan fill="#f2f2f2">${esc(r.cmd)}</tspan></text>`;
     } else {
       b += `<text x="18" y="${y}" font-size="${size}" font-family="${MONO}" fill="${r.color ?? '#cccccc'}" xml:space="preserve">${esc(r.t)}</text>`;
     }
     if (r.note) {
-      const len = (r.cmd !== undefined ? r.cmd.length + 2 : (r.t ?? '').length);
-      b += `<rect x="16" y="${y - 16}" width="${len * cw + 6}" height="${lh}" rx="4" fill="none" stroke="${C.orange}" stroke-width="2"/>`;
-      // Si la línea es muy larga, la nota va en la fila siguiente
-      let x = 18 + len * cw + 22, ny = y;
-      if (x > W - 300) {
+      const start = r.cmd !== undefined ? prompt.length : 0;
+      const len = shown.length - start;
+      b += `<rect x="${16 + start * cw}" y="${y - 16}" width="${len * cw + 6}" height="${lh}" rx="4" fill="none" stroke="${C.orange}" stroke-width="2"/>`;
+      let x = 18 + shown.length * cw + 22, ny = y;
+      if (x > W - 250) {
         const next = rows[i + 1];
-        const nlen = next ? (next.cmd !== undefined ? next.cmd.length + 2 : (next.t ?? '').length) : 0;
+        const nlen = next ? (next.cmd !== undefined ? prompt.length + next.cmd.length : (next.t ?? '').length) : 0;
         x = 18 + nlen * cw + 30;
         ny = y + lh;
       }
@@ -271,84 +267,21 @@ function terminal(name, title, lines, notes = []) {
   save(name, W, H, b, { card: false });
 }
 
-terminal('terminal-configurar.svg', 'MINGW64:/c/Users/ana', [
+terminal('terminal-configurar.svg', [
   { cmd: 'git --version', note: 1 },
   'git version 2.56.1.windows.1',
-  '',
   { cmd: 'git config --global user.name "Ana Pérez"', note: 2 },
-  '',
   { cmd: 'git config --global user.email "ana@ejemplo.com"', note: 3 },
-  '',
   { cmd: '' },
-], ['Comprueba que Git está instalado', 'Tu nombre, tal como aparecerá en los commits', 'El mismo correo de tu cuenta de GitHub']);
+], ['Comprueba que Git está instalado', 'Tu nombre en los commits', 'El correo de tu cuenta de GitHub']);
 
-terminal('terminal-clonar.svg', 'MINGW64:/c/Users/ana', [
-  { cmd: 'git clone https://github.com/tu-usuario/uneti-web.git', note: 1 },
-  "Cloning into 'uneti-web'...",
-  'remote: Enumerating objects: 250, done.',
-  'remote: Counting objects: 100% (250/250), done.',
-  'remote: Compressing objects: 100% (145/145), done.',
-  'Receiving objects: 100% (250/250), 183.17 KiB | 699.00 KiB/s, done.',
-  'Resolving deltas: 100% (100/100), done.',
-  '',
-  { cmd: 'cd uneti-web', note: 2 },
-  '',
-  { dir: '~/uneti-web', branch: 'master', cmd: 'git switch -c guia-horario-biblioteca', note: 3 },
-  "Switched to a new branch 'guia-horario-biblioteca'",
-  '',
-  { dir: '~/uneti-web', branch: 'guia-horario-biblioteca', cmd: '' },
-], ['Descarga tu copia', 'Entra en la carpeta', 'Crea tu rama y cámbiate a ella']);
-
-terminal('terminal-status.svg', 'MINGW64:/c/Users/ana/uneti-web', [
-  { dir: '~/uneti-web', branch: 'guia-horario-biblioteca', cmd: 'git status' },
-  { t: 'On branch guia-horario-biblioteca', note: 1 },
+terminal('terminal-status.svg', [
+  { cmd: 'git status' },
+  { t: 'On branch mi-primer-cambio', note: 1 },
   { t: 'Changes not staged for commit:', note: 2 },
   '  (use "git add <file>..." to update what will be committed)',
   '  (use "git restore <file>..." to discard changes in working directory)',
-  { t: '        modified:   src/content/guias/campus-virtual.md', color: '#e74856', note: 3 },
+  { t: '        modified:   src/content/guias/campus-virtual.md', color: '#f14c4c', note: 3 },
   '',
   'no changes added to commit (use "git add" and/or "git commit -a")',
 ], ['En qué rama estás', 'Hay cambios sin preparar', 'El archivo que modificaste']);
-
-terminal('terminal-commit.svg', 'MINGW64:/c/Users/ana/uneti-web', [
-  { dir: '~/uneti-web', branch: 'guia-horario-biblioteca', cmd: 'git add src/content/guias/campus-virtual.md', note: 1 },
-  '',
-  { dir: '~/uneti-web', branch: 'guia-horario-biblioteca', cmd: 'git commit -m "Añade horario de la biblioteca a la guía del campus"', note: 2 },
-  '[guia-horario-biblioteca ec84d4c] Añade horario de la biblioteca a la guía del campus',
-  ' 1 file changed, 4 insertions(+)',
-  '',
-  { dir: '~/uneti-web', branch: 'guia-horario-biblioteca', cmd: 'git status', note: 3 },
-  'On branch guia-horario-biblioteca',
-  'nothing to commit, working tree clean',
-], ['Prepara el archivo', 'Guarda el commit', 'Todo guardado']);
-
-terminal('terminal-push.svg', 'MINGW64:/c/Users/ana/uneti-web', [
-  { dir: '~/uneti-web', branch: 'guia-horario-biblioteca', cmd: 'git push -u origin guia-horario-biblioteca', note: 1 },
-  'Enumerating objects: 11, done.',
-  'Counting objects: 100% (11/11), done.',
-  'Delta compression using up to 8 threads',
-  'Compressing objects: 100% (5/5), done.',
-  'Writing objects: 100% (6/6), 702 bytes | 702.00 KiB/s, done.',
-  'Total 6 (delta 4), reused 0 (delta 0), pack-reused 0 (from 0)',
-  'remote: Resolving deltas: 100% (4/4), completed with 4 local objects.',
-  'remote:',
-  "remote: Create a pull request for 'guia-horario-biblioteca' on GitHub by visiting:",
-  { t: 'remote:      https://github.com/tu-usuario/uneti-web/pull/new/guia-horario-biblioteca', color: '#61d6d6', note: 2 },
-  'remote:',
-  'To https://github.com/tu-usuario/uneti-web.git',
-  ' * [new branch]      guia-horario-biblioteca -> guia-horario-biblioteca',
-  "branch 'guia-horario-biblioteca' set up to track 'origin/guia-horario-biblioteca'.",
-], ['Sube tu rama a tu copia en GitHub', 'Enlace directo para abrir el pull request']);
-
-/* ---------- Capturas pendientes ---------- */
-
-function pendiente(name, title, desc) {
-  const W = 960, H = 400;
-  let b = `<rect x="2" y="2" width="${W - 4}" height="${H - 4}" rx="18" fill="${C.soft}" stroke="${C.muted}" stroke-width="3" stroke-dasharray="14 10"/>`;
-  b += `<g transform="translate(${W / 2 - 36},96)" fill="none" stroke="${C.muted}" stroke-width="5" stroke-linejoin="round"><rect x="0" y="14" width="72" height="50" rx="8"/><path d="M22,14 l6,-12 h16 l6,12"/><circle cx="36" cy="39" r="14"/></g>`;
-  b += text(W / 2, 214, 'CAPTURA PENDIENTE', { size: 16, weight: 800, color: C.orange, anchor: 'middle' });
-  b += text(W / 2, 252, title, { size: 22, weight: 700, anchor: 'middle' });
-  desc.forEach((l, i) => (b += text(W / 2, 290 + i * 26, l, { size: 16, color: C.muted, anchor: 'middle' })));
-  save(name, W, H, b, { card: false });
-}
-
