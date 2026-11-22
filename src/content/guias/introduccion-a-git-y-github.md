@@ -4,6 +4,8 @@ description: Qué son Git y GitHub y cómo hacer tu primera contribución a esta
 category: Primeros pasos
 order: 20
 updated: 2026-11-22
+author: Sethprie
+authorUrl: https://sethprie.com/
 tags: [git, github, vs code, contribuir]
 draft: true
 ---
@@ -44,7 +46,7 @@ Esta es la idea más importante de la guía. Un cambio pasa por cuatro lugares a
 
 ![Cuatro cajas: tu carpeta, preparados, historial y GitHub, unidas por los comandos git add, git commit y git push, y git pull de vuelta](../../assets/guias/git/flujo.svg)
 
-*En VS Code cada flecha es un botón. Debajo de cada paso verás también el comando equivalente.*
+*Cada flecha se puede hacer con un botón de VS Code o con un comando en la terminal. Son dos formas de hacer lo mismo.*
 
 1. **Tu carpeta:** editas los archivos como siempre.
 2. **Preparados:** eliges qué cambios entrarán en el próximo commit (`git add`).
@@ -191,7 +193,9 @@ Un **pull request** (PR) es la propuesta que haces para que tus cambios entren e
 
 ## Práctica: tu primera contribución
 
-Vas a proponer un cambio pequeño a una guía de esta web. En el ejemplo, añadimos un consejo al final de la guía del campus virtual; tú puedes corregir una errata o añadir un dato útil en la guía que prefieras. Todo desde VS Code.
+Vas a proponer un cambio pequeño a una guía de esta web. En el ejemplo, añadimos un consejo al final de la guía del campus virtual; tú puedes corregir una errata o añadir un dato útil en la guía que prefieras.
+
+> **Botones o terminal: elige uno.** Cada paso se explica con los botones de VS Code. Debajo hay un desplegable, «Alternativa: hacerlo con la terminal», con el comando que hace **lo mismo**. Usa una sola de las dos formas en cada paso: si haces ambas, repetirás el paso o Git te dará un error. Si es tu primera vez, quédate con los botones.
 
 ### 1. Clona el repositorio
 
@@ -217,7 +221,16 @@ Elige la carpeta donde guardarlo (por ejemplo, Documentos) y, cuando termine, pu
 
 *VS Code abre la carpeta del proyecto.*
 
-En la terminal: `git clone https://github.com/Sethprie/uneti-web.git`
+<details class="alternativa">
+<summary>Alternativa: hacerlo con la terminal</summary>
+
+Solo si **no** usaste los botones de arriba. Hace exactamente lo mismo.
+
+```sh
+git clone https://github.com/Sethprie/uneti-web.git
+```
+
+</details>
 
 ### 2. Crea tu rama
 
@@ -239,9 +252,18 @@ La barra inferior ahora muestra tu rama. Todo lo que hagas desde aquí queda en 
 
 *Para volver a la principal, haz clic aquí y elige `master`.*
 
-En la terminal: `git switch -c mi-primer-cambio`
+<details class="alternativa">
+<summary>Alternativa: hacerlo con la terminal</summary>
 
-> En tutoriales viejos verás `git checkout -b` en lugar de `git switch -c`. Hacen lo mismo; `switch` es la forma moderna.
+Solo si **no** usaste los botones de arriba. Hace exactamente lo mismo.
+
+```sh
+git switch -c mi-primer-cambio
+```
+
+En tutoriales viejos verás `git checkout -b` en lugar de `git switch -c`. Hacen lo mismo; `switch` es la forma moderna.
+
+</details>
 
 ### 3. Haz tu cambio
 
@@ -264,7 +286,7 @@ Ve al panel de **Control de código fuente**. Tu archivo aparece en **Changes**,
 
 Si haces clic en el archivo, VS Code te muestra el antes y el después, línea por línea.
 
-En la terminal, `git status` te dice lo mismo:
+Si quieres comprobarlo en la terminal, `git status` te muestra lo mismo. Este comando solo **informa**, no cambia nada, así que puedes usarlo cuando quieras:
 
 ![Salida de git status en la terminal de VS Code, con la rama, los cambios sin preparar y el archivo modificado señalados](../../assets/guias/git/terminal-status.svg)
 
@@ -280,12 +302,17 @@ En la terminal, `git status` te dice lo mismo:
 
 *Un buen mensaje dice qué cambia, en pocas palabras: «Añade un consejo a la guía del campus».*
 
-En la terminal:
+<details class="alternativa">
+<summary>Alternativa: hacerlo con la terminal</summary>
+
+Solo si **no** usaste los botones de arriba. Hace exactamente lo mismo.
 
 ```sh
 git add src/content/guias/campus-virtual.md
 git commit -m "Añade un consejo a la guía del campus"
 ```
+
+</details>
 
 ### 5. Publica tu rama
 
@@ -307,7 +334,18 @@ Como no tienes permiso para subir al proyecto original, VS Code te ofrece crear 
 
 *Solo pasa la primera vez. Las siguientes, tu rama va directa a tu fork.*
 
-En la terminal: `git push -u origin mi-primer-cambio`. Ojo: este comando **no crea el fork**. Úsalo solo cuando VS Code ya lo haya creado, o para subir cambios nuevos después.
+<details class="alternativa">
+<summary>Alternativa: hacerlo con la terminal</summary>
+
+Solo si **no** usaste los botones de arriba. Hace exactamente lo mismo.
+
+```sh
+git push -u origin mi-primer-cambio
+```
+
+Ojo: este comando **no crea el fork**. Úsalo solo cuando VS Code ya lo haya creado, o para subir cambios nuevos después.
+
+</details>
 
 ### 6. Abre el pull request
 
@@ -362,3 +400,7 @@ Lo que viste es suficiente para contribuir. Cuando quieras avanzar, estos son lo
 - **[GitHub Skills](https://skills.github.com/):** cursos prácticos dentro del propio GitHub.
 
 ¿Te trabaste en algún paso? Pregunta en la comunidad: los enlaces están en la [página de inicio](/#comunidad).
+
+---
+
+Esta guía la escribió en principio [Sethprie](https://sethprie.com/), pero cualquiera puede actualizarla o corregirla si lo cree necesario. Si ves algo desactualizado o que se puede explicar mejor, propón el cambio siguiendo los mismos pasos de esta guía.

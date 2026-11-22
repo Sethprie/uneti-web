@@ -399,3 +399,28 @@ a:hover {
 .astro-code {
   border: 1px solid var(--border);
 }
+
+/* Desplegable con la forma alternativa de hacer un paso (por ejemplo, en la terminal) */
+.prose details.alternativa {
+  margin: 1.25em 0 1.75em;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-soft);
+  padding: 0 16px;
+}
+
+.prose details.alternativa > summary {
+  cursor: pointer;
+  padding: 10px 0;
+  font-size: 0.9rem;
+  font-weight: 650;
+  color: var(--text-muted);
+}
+
+.prose details.alternativa[open] {
+  padding-bottom: 4px;
+}
+
+.prose details.alternativa > :not(summary) {
+  font-size: 0.95rem;
+}
