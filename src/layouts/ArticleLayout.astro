@@ -69,6 +69,20 @@ const showToc = headings.filter((h) => h.depth === 2).length >= 4;
   </article>
 </BaseLayout>
 
+<script>
+  // Los enlaces del texto se abren en una pestaña nueva para no perder el sitio
+  // de lectura. Los que llevan a una sección de la misma página (#...), no.
+  for (const a of document.querySelectorAll<HTMLAnchorElement>('.prose a[href]')) {
+    if (a.getAttribute('href')!.startsWith('#')) continue;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    const hint = document.createElement('span');
+    hint.className = 'sr-only';
+    hint.textContent = ' (se abre en una pestaña nueva)';
+    a.append(hint);
+  }
+</script>
+
 <style>
   .narrow {
     max-width: 820px;
