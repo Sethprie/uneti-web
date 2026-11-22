@@ -7,10 +7,10 @@ updated: 2026-11-22
 author: Sethprie
 authorUrl: https://sethprie.com/
 tags: [git, github, vs code, contribuir]
-draft: true
+draft: false
 ---
 
-Al terminar esta guía sabrás qué son Git y GitHub, tendrás todo instalado y habrás propuesto tu primer cambio a esta misma web. Todo se hace desde **Visual Studio Code**, el editor que usa casi todo el mundo para programar. No necesitas saber programar ni haberlo usado antes.
+Al terminar esta guía sabrás qué son Git y GitHub, tendrás todo instalado y habrás propuesto tu primer cambio a esta misma web. Casi todo se hace desde **Visual Studio Code**, el editor que usa casi todo el mundo para programar. No necesitas saber programar ni haberlo usado antes.
 
 ## Qué es Git
 
@@ -131,7 +131,7 @@ Normalmente usas la computadora con el ratón: haces clic en botones y menús. L
 - En Windows, la terminal de VS Code usa **PowerShell**. No necesitas aprenderlo: solo vas a escribir comandos de Git, que empiezan por `git`.
 - Si un comando falla, no se rompe nada. La terminal te muestra un mensaje y puedes volver a intentarlo.
 
-En esta guía casi todo se hace con botones, pero la terminal es útil para comprobar qué está pasando y la usarás una vez para configurar Git.
+En esta guía casi todo se hace con botones, pero la terminal es útil para comprobar qué está pasando, y la usarás para configurar Git.
 
 ### Configura tu nombre
 
@@ -224,11 +224,13 @@ Elige la carpeta donde guardarlo (por ejemplo, Documentos) y, cuando termine, pu
 <details class="alternativa">
 <summary>Alternativa: hacerlo con la terminal</summary>
 
-Solo si **no** usaste los botones de arriba. Hace exactamente lo mismo.
+Solo si **no** usaste los botones de arriba. Abre una terminal en la carpeta donde quieres guardar el proyecto (por ejemplo, Documentos) y escribe:
 
 ```sh
 git clone https://github.com/Sethprie/uneti-web.git
 ```
+
+Después abre la carpeta `uneti-web` en VS Code con **File → Open Folder...**
 
 </details>
 
@@ -320,7 +322,7 @@ Pulsa **Publish Branch**.
 
 ![Panel de control de código fuente con el botón Publish Branch resaltado](../../assets/guias/git/vsc-publicar.png)
 
-*Solo la primera vez se llama así; luego el botón sube los cambios nuevos.*
+*Solo la primera vez se llama así. Después el botón pasa a llamarse **Sync Changes** y sube tus cambios nuevos.*
 
 La primera vez, VS Code te pide iniciar sesión en GitHub. Pulsa **Allow**, autoriza en el navegador que se abre y vuelve a VS Code.
 
@@ -337,13 +339,11 @@ Como no tienes permiso para subir al proyecto original, VS Code te ofrece crear 
 <details class="alternativa">
 <summary>Alternativa: hacerlo con la terminal</summary>
 
-Solo si **no** usaste los botones de arriba. Hace exactamente lo mismo.
+Solo si **no** usaste el botón de arriba, y con una diferencia importante: este comando **no crea el fork**. Úsalo solo cuando ya tengas tu fork (por ejemplo, para subir cambios nuevos después):
 
 ```sh
 git push -u origin mi-primer-cambio
 ```
-
-Ojo: este comando **no crea el fork**. Úsalo solo cuando VS Code ya lo haya creado, o para subir cambios nuevos después.
 
 </details>
 
