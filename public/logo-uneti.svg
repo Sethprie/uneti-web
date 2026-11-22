@@ -46,7 +46,7 @@
   <g class="ink">
     <rect x="326" y="361" width="32" height="314" />
     <rect x="397" y="361" width="31" height="314" />
-    <polygon points="358,361 397,556 397,675 358,491" />
+    <polygon points="356,361 399,556 399,675 356,491" />
     <rect x="446" y="361" width="30" height="314" />
     <polygon points="446,361 537,361 523,389 446,389" />
     <polygon points="446,494 526,494 508,525 446,525" />

@@ -21,7 +21,13 @@ interface Props {
 const { title, description, crumbs, kicker, author, date, updated, minutes, tags, back } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} type="article">
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  article={{ published: date, modified: updated, author, section: kicker, tags }}
+  breadcrumbs={crumbs}
+>
   <article class="article">
     <header class="article-header">
       <div class="container narrow">

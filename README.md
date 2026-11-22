@@ -20,6 +20,7 @@ pnpm install
 pnpm dev       # servidor local en http://localhost:4321
 pnpm build     # genera la web en dist/
 pnpm preview   # sirve dist/ para revisar la compilación
+pnpm images    # regenera og.png y los iconos PNG a partir del logo
 ```
 
 ## Estructura
@@ -55,6 +56,13 @@ public/                   Archivos servidos tal cual: favicon y logo-uneti.svg
 | Menú principal | `nav` en `src/config/site.ts` |
 | Categorías de guías y sus colores | `GUIDE_CATEGORIES` en `src/content.config.ts` y `CATEGORY_COLORS` en `src/utils/content.ts` |
 | Colores del tema | Variables de `src/styles/global.css`: `:root` para el modo claro y `[data-theme='dark']` para el oscuro |
+
+## SEO
+
+- `robots.txt`, `sitemap-index.xml` (con fecha de modificación de guías y noticias) y `rss.xml` se generan al compilar.
+- Cada página tiene URL canónica, Open Graph, Twitter Card y datos estructurados (schema.org): `WebSite` y `Organization` en todas, y `Article` y `BreadcrumbList` en guías y noticias.
+- El dominio sale de `SITE_URL`; por defecto, `https://uneti-web.vercel.app` (ver `astro.config.mjs`).
+- La imagen para compartir (`public/og.png`) y los iconos se regeneran con `pnpm images`.
 
 ## Contribuir
 

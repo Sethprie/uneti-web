@@ -53,7 +53,7 @@ En el repositorio, **Settings → Secrets and variables → Actions → New repo
 
 ### 5. Dominio (opcional)
 
-Sin configuración adicional, la web usa el dominio `.vercel.app` del proyecto para el sitemap y las URL canónicas. Con un dominio propio, crear en **Settings → Secrets and variables → Actions → Variables** una variable `SITE_URL` con la dirección completa, por ejemplo `https://uneti-estudiantil.com`.
+Sin configuración adicional, la web usa `https://uneti-web.vercel.app` para el sitemap, el RSS y las URL canónicas. Con un dominio propio, crear en **Settings → Secrets and variables → Actions → Variables** una variable `SITE_URL` con la dirección completa, por ejemplo `https://uneti-estudiantil.com`.
 
 ### 6. Primer despliegue
 
