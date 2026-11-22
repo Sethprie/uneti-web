@@ -64,18 +64,25 @@ import { officialChannels } from '../../config/site';
   .groups {
     display: grid;
     gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   }
 
+  /* Cada grupo ocupa todo el ancho: texto a la izquierda y enlaces en cuadrícula
+     a la derecha, así un grupo con pocos enlaces no deja huecos. */
   .group {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+    display: grid;
+    gap: 18px 32px;
+    align-items: start;
     padding: 24px;
     border-radius: 20px;
     border: 1px solid var(--border);
-    border-top: 5px solid var(--c);
+    border-left: 5px solid var(--c);
     background: var(--surface);
+  }
+
+  @media (min-width: 860px) {
+    .group {
+      grid-template-columns: minmax(220px, 300px) 1fr;
+    }
   }
 
   .badge {
@@ -119,9 +126,10 @@ import { officialChannels } from '../../config/site';
   ul {
     list-style: none;
     padding: 0;
-    margin: auto 0 0;
+    margin: 0;
     display: grid;
     gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
   }
 
   a {
