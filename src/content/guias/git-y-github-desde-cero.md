@@ -106,12 +106,23 @@ Solo vas a usar cuatro partes de la ventana:
 
 1. **Explorador:** los archivos del proyecto. Haz clic en uno para abrirlo en el editor.
 2. **Control de código fuente** (*Source Control*): el panel de Git. Aquí ves tus cambios y haces los commits.
-3. **Terminal:** una consola dentro del editor para escribir comandos. Se abre en **View → Terminal**, o con `Ctrl+ñ` en teclado español (`` Ctrl+` `` en inglés).
+3. **Terminal:** una ventana para darle órdenes a la computadora escribiendo. Se abre en **View → Terminal**, o con `Ctrl+ñ` en teclado español (`` Ctrl+` `` en inglés).
 4. **Barra inferior:** muestra en qué rama estás. Haz clic ahí para cambiar de rama.
+
+### Qué es la terminal
+
+Normalmente usas la computadora con el ratón: haces clic en botones y menús. La **terminal** es otra forma de hacer lo mismo, pero **escribiendo**. Cada orden que escribes se llama **comando**, y se ejecuta al pulsar `Enter`.
+
+- El texto que aparece antes del cursor, como `PS C:\Users\ana\Documents\uneti-web>`, es el **prompt**. Te dice en qué carpeta estás: los comandos actúan sobre esa carpeta.
+- La de VS Code ya se abre en la carpeta del proyecto, así que no tienes que moverte a ningún sitio.
+- En Windows, la terminal de VS Code usa **PowerShell**. No necesitas aprenderlo: solo vas a escribir comandos de Git, que empiezan por `git`.
+- Si un comando falla, no se rompe nada. La terminal te muestra un mensaje y puedes volver a intentarlo.
+
+En esta guía casi todo se hace con botones, pero la terminal es útil para comprobar qué está pasando y la usarás una vez para configurar Git.
 
 ### Configura tu nombre
 
-Git pone tu nombre y correo en cada commit. Abre la terminal de VS Code y escribe, una sola vez:
+Git pone tu nombre y correo en cada commit. Abre la terminal de VS Code y escribe estos comandos, uno por uno, pulsando `Enter` después de cada uno. Solo se hace una vez:
 
 ```sh
 git --version
@@ -130,6 +141,18 @@ git config --global user.email "tu-correo@ejemplo.com"
 ### Repositorio
 
 Un **repositorio** (o *repo*) es un proyecto guardado con Git: sus archivos más todo su historial. Esta web es un repositorio. **Clonar** es descargar un repositorio a tu computadora.
+
+Cada repositorio de GitHub tiene una **dirección** (URL) para clonarlo. Por ejemplo, la de esta web es `https://github.com/Sethprie/uneti-web.git`:
+
+- `Sethprie` es el usuario dueño del repositorio.
+- `uneti-web` es el nombre del repositorio.
+- `.git` al final indica que es la dirección para clonar.
+
+Para obtenerla de cualquier repositorio: entra en su página de GitHub, pulsa el botón verde **Code**, deja seleccionada la pestaña **HTTPS** y pulsa el icono de copiar.
+
+![Menú del botón Code de GitHub con la dirección HTTPS del repositorio resaltada](../../assets/guias/git/boton-code.png)
+
+*El icono de los dos cuadrados, a la derecha de la dirección, la copia.*
 
 ### Ramas
 
@@ -167,7 +190,7 @@ Abre VS Code. En la pantalla de bienvenida, pulsa **Clone Git Repository...**
 
 *Si no ves la bienvenida: **File → New Window**.*
 
-Pega la dirección del repositorio y pulsa `Enter`:
+Pega la dirección del repositorio de esta web y pulsa `Enter`. Es la que viste en [Repositorio](#repositorio), o puedes copiarla del botón **Code** de [su página en GitHub](https://github.com/Sethprie/uneti-web):
 
 ```text
 https://github.com/Sethprie/uneti-web.git

@@ -154,6 +154,14 @@ try {
     // El recuadro del botón Download se añadió después con sharp
     clip: { x: 0, y: 0, width: 1280, height: 640 },
   });
+
+  await capture({
+    file: 'boton-code.png',
+    url: 'https://github.com/Sethprie/uneti-web',
+    prepare: `__find('button', 'Code')?.click()`,
+    marks: [['input[value$=".git"]']],
+    clip: { x: 520, y: 140, width: 760, height: 460 },
+  });
 } finally {
   ws.close();
   browser.kill();
