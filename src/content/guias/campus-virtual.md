@@ -36,3 +36,4 @@ También hay categorías para el **Trayecto Inicial**, las UC comunes a los dos 
 
 - **UNETI Radio:** radio en línea de la universidad, enlazada desde la portada del campus.
 - **[YouTube: UNETI Educativo](https://www.youtube.com/@UNETIEducativo):** contenido educativo y anuncios.
+- **Prueba para la guía de Git:** este cambio no se publicará.
