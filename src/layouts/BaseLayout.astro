@@ -137,6 +137,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={jsonLd} />
+    <slot name="head" />
 
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#08122e" media="(prefers-color-scheme: dark)" />

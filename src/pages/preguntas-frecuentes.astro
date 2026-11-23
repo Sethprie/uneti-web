@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import { actualizado, preguntas } from '../data/preguntas';
+import { formatDate } from '../utils/content';
+import { site } from '../config/site';
+
+const sinEtiquetas = (html: string) =>
+  html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+// Datos estructurados para que los buscadores muestren las preguntas
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: preguntas.flatMap((g) =>
+    g.preguntas.map((p) => ({
+      '@type': 'Question',
+      name: p.pregunta,
+      acceptedAnswer: { '@type': 'Answer', text: sinEtiquetas(p.respuesta) },
+    })),
+  ),
+};
+---
+
+<BaseLayout
+  title="Preguntas frecuentes"
+  description="Respuestas a las dudas que más se repiten entre estudiantes de la UNETI: prácticas profesionales, carnet, plataforma y canales oficiales."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} slot="head" />
+
+  <PageHeader
+    title="Preguntas frecuentes"
+    eyebrow="Dudas comunes"
+    lead="Lo que más se pregunta en los grupos de estudiantes, respondido en un solo lugar."
+    crumbs={[{ label: 'Preguntas frecuentes' }]}
+  />
+
+  <div class="container section faq">
+    <aside class="note">
+      <p>
+        Estas respuestas las recopilan estudiantes a partir de lo que se resuelve en la comunidad. <strong
+          >No son información oficial</strong
+        >: ante cualquier duda, confirma en <a href={site.officialUrl} target="_blank" rel="noopener noreferrer"
+          >{site.officialLabel}</a
+        > o en los <a href="/#canales-oficiales">canales oficiales</a>.
+      </p>
+      <p class="muted">
+        Actualizado el <time datetime={actualizado.toISOString()}>{formatDate(actualizado)}</time>. ¿Falta una
+        pregunta o algo cambió? <a href="/participa">Propón el cambio</a>.
+      </p>
+    </aside>
+
+    <nav class="topics" aria-label="Temas">
+      {preguntas.map((g) => <a href={`#${g.id}`}>{g.titulo}</a>)}
+    </nav>
+
+    {
+      preguntas.map((g) => (
+        <section class="group" id={g.id} aria-labelledby={`${g.id}-titulo`}>
+          <h2 id={`${g.id}-titulo`}>{g.titulo}</h2>
+          {g.preguntas.map((p) => (
+            <details class="item" id={p.id}>
+              <summary>{p.pregunta}</summary>
+              <div class="answer prose" set:html={p.respuesta} />
+            </details>
+          ))}
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<script>
+  // Los enlaces externos de las respuestas se abren en una pestaña nueva
+  for (const a of document.querySelectorAll<HTMLAnchorElement>('.answer a[href^="http"]')) {
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+  }
+
+  // Si se llega con #pregunta en la dirección, se abre esa respuesta
+  const abrir = () => {
+    const el = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+    if (el instanceof HTMLDetailsElement) el.open = true;
+  };
+  abrir();
+  addEventListener('hashchange', abrir);
+</script>
+
+<style>
+  .faq {
+    max-width: 820px;
+  }
+
+  .note {
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    border: 2px solid var(--brand-yellow);
+    background: color-mix(in srgb, var(--brand-yellow) 12%, var(--surface));
+    margin-bottom: 28px;
+  }
+
+  .note p {
+    margin: 0;
+  }
+
+  .note p + p {
+    margin-top: 8px;
+    font-size: 0.9rem;
+  }
+
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+
+  .topics a {
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .topics a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .group + .group {
+    margin-top: 44px;
+  }
+
+  .group h2 {
+    font-size: 1.7rem;
+    margin-bottom: 14px;
+  }
+
+  .item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .item + .item {
+    margin-top: 10px;
+  }
+
+  .item[open] {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  }
+
+  summary {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    font-weight: 650;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::after {
+    content: '+';
+    flex: none;
+    font-size: 1.4rem;
+    line-height: 1;
+    color: var(--accent);
+    transition: transform 0.15s ease;
+  }
+
+  .item[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  .answer {
+    padding: 0 18px 6px;
+  }
+
+  .answer :global(p),
+  .answer :global(ul),
+  .answer :global(ol) {
+    margin-bottom: 0.8em;
+  }
+
+  .muted {
+    color: var(--text-muted);
+  }
+</style>

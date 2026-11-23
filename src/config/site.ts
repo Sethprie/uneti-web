@@ -124,6 +124,7 @@ export const nav = [
   { href: '/guias', label: 'Guías' },
   { href: '/noticias', label: 'Noticias' },
   { href: '/recursos', label: 'Recursos' },
+  { href: '/preguntas-frecuentes', label: 'Preguntas' },
   { href: '/sobre', label: 'Sobre el proyecto' },
 ] as const;
 
